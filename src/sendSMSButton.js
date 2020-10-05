@@ -6,7 +6,7 @@ function sendSMSButton(){
     let exportButton = document.createElement("button");
     exportButton.className = "btn btn-success btn-sm";
     exportButton.id = "send-SMS-button";
-    exportButton.setAttribute("onclick", `$("#smsModal").modal();`)
+    exportButton.setAttribute("onclick", `$("#smsModal").modal();`);
     exportButton.innerText = "Send SMS";
     return exportButton;
 }

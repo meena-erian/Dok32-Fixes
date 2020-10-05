@@ -13,7 +13,9 @@ function sendSMSModal(){
         <h4 class="modal-title">Modal Header</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <p>Select SMS template.</p>
+        <select id='sms-templates-list'>
+        </select>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -22,6 +24,16 @@ function sendSMSModal(){
     
   </div>
 `;
+    fetch("https://everlast-office.dok32.com:4443/webApi/company/sms/template/list.json?limit=25").then(response => response.json())
+      .then(data => {
+        let select = document.getElementById('sms-templates-list');
+        data.data.list.forEach(opt => {
+          let newOpt = document.createElement("OPTION");
+          newOpt.innerText = opt.name;
+          newOpt.value = opt.id;
+          select.append(newOpt);
+        });
+      });
     return mdiv;
 }
 
