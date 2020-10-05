@@ -1,5 +1,4 @@
 import {sendSMSModal} from "./sendSMSModal.js";
-import {$,jQuery} from 'jquery';
 
 function sendSMSButton(){
     document.body.append(sendSMSModal());
@@ -9,7 +8,7 @@ function sendSMSButton(){
     exportButton.id = "download-CSV-button";
     exportButton.onclick = (function () {
         console.log(window);
-        $("#smsModal").modal();
+        //$("#smsModal").modal();
     });
     exportButton.innerText = "Send SMS";
     return exportButton;
