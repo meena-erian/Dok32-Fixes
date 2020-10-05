@@ -13,7 +13,7 @@ function downloadCSVButton(){
 					if (ii > 0) fileRaw += ",";
 					fileRaw += `"${col.innerText.replace(/"/g, `""`)}"`;
 				});
-				if (i > 0) fileRaw += "\n";
+				fileRaw += "\n";
 			}
 		});
 		let downloadLink = document.createElement("a");
