@@ -6,10 +6,7 @@ function sendSMSButton(){
     let exportButton = document.createElement("button");
     exportButton.className = "btn btn-success btn-sm";
     exportButton.id = "download-CSV-button";
-    exportButton.onclick = (function () {
-        console.log(window);
-        //$("#smsModal").modal();
-    });
+    exportButton.onclick = `$("#smsModal").modal();`;
     exportButton.innerText = "Send SMS";
     return exportButton;
 }
