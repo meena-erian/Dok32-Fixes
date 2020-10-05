@@ -6,7 +6,7 @@ function pageScanner(){
 	    addDownloadCSV();
     }
 	if (document.querySelector("[ng-click='getReport()']")){
-	    addPagination();
+	    //addPagination();
 	}
 }
 
