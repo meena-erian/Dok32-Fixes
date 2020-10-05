@@ -7,7 +7,7 @@ function sendSMSButton(){
     exportButton.className = "btn btn-success btn-sm";
     exportButton.id = "download-CSV-button";
     exportButton.onclick = (function () {
-        window.$("#smsModal").modal();
+        window.jQuery("#smsModal").modal();
     });
     exportButton.innerText = "Send SMS";
     return exportButton;
