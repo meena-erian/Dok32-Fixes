@@ -24,7 +24,7 @@ const reportsParams = {
 }
 
 function runReport(){
-    var inps = {};
+    var inps = [];
     var reportModal = document.getElementById("reportModal");
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
