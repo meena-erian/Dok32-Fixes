@@ -1,7 +1,16 @@
 import {reportModal} from "./reportModal.js";
 
 function runReport(){
-    console.log("Running report");
+    var inps = [];
+    document.querySelectorAll("[form-input-element]").forEach( inp =>{
+        let itype = inp.getAttribute("form-input-type");
+        let ikey = inp.getAttribute("form-input-key");
+        let value = inp.value;
+        if(itype === "date") value = new Date().getTime(value);
+
+        inps.push({key: ikey, value: value, type: itype});
+    });
+    console.log(inps);
 }
 
 window.runReport = runReport;

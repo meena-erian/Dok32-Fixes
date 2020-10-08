@@ -8,7 +8,7 @@ function addFunctionButtons(){
 	greenButtons.forEach((btn) => {
 		if (btn.innerText.includes("XLS")) {
             let form = btn.parentElement;
-            bindForm(form);
+            console.log(bindForm(form));
             btn.parentElement.append("  ");
             btn.parentElement.append(downloadCSVButton());
             btn.parentElement.append("  ");
