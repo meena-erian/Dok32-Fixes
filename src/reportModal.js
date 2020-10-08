@@ -21,7 +21,7 @@ function reportModal(){
         </div>
       </div>
       <div class="modal-footer">
-        <button id="report-download-button" type="button" class="btn btn-success" disabled>Download raw JSON data</button>
+        <a id="report-download-button" type="button" class="btn btn-success" disabled>Download raw JSON data</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
