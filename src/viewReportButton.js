@@ -31,7 +31,7 @@ function runReport(){
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
         let value = inp.value;
-        if(itype === "date") value = new Date().getTime(value);
+        if(itype === "date") value = new Date(value).getTime();
 
         inps.push({key: ikey, value: value, type: itype});
     });
@@ -41,7 +41,11 @@ function runReport(){
         params[inp.key] = inp.value;
     });
     let reportP = reportsParams[reportHash];
-    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress").then(res => console.log(res));
+    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress")
+        .then(res => {
+            console.log(res);
+            document.getElementById("report-download-button").disabled = false;
+        });
 }
 
 window.runReport = runReport;
