@@ -51,7 +51,7 @@ function runReport(){
             downloadButton.disabled = false;
             downloadButton.setAttribute("download", "report.json");
             progressLabel.innerText = "Report Completed";
-            downloadButton.href = `data:application/octet-stream;charset=utf-8;base64,${JSON.stringify(res, null, 2)}`;
+            downloadButton.setAttribute("href", `data:application/octet-stream;charset=utf-8;base64,${JSON.stringify(res, null, 2)}`);
         });
 }
 
