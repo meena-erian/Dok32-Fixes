@@ -13,13 +13,13 @@ function camelCaseToNorml(str){
 /**
  * Retives a list of all possible keys in JSON array
  * 
- * @param {object} jsonArr An array of objects with similar or mutual properties
+ * @param {object} objArr An array of objects with similar or mutual properties
  * 
  * @returns {object} An array of all possible keys
  */
-function getJSONTableHeader(jsonArr){
+function getJSONTableHeader(objArr){
     var merge = {};
-    jsonArr.forEach(element => {
+    objArr.forEach(element => {
         Object.assign(merge, element);
     });
     return Object.keys(merge);
@@ -42,22 +42,24 @@ function escapeCSVValue(val){
 
 /**
  * 
- * @param {object} jsonArr 
+ * @param {object} objArr 
  */
-function objArrTOCSV(jsonArr){
-    var header = getJSONTableHeader(jsonArr);
+function objArrTOCSV(objArr){
+    var header = getJSONTableHeader(objArr);
+    console.log("Header:", header);
     var CSVstr = "";
     header.forEach(column => {
         if(CSVstr.length) CSVstr += ",";
         CSVstr += escapeCSVValue(camelCaseToNorml(column));
     })
-    jsonArr.forEach(row => {
+    objArr.forEach(row => {
         CSVstr += "\n";
         header.forEach((key, index) => {
             if(index !== 0) CSVstr += ",";
             CSVstr += escapeCSVValue(row[key]);
         });
     });
+    return CSVstr;
 }
 
 export {objArrTOCSV};
