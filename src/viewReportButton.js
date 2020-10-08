@@ -4,17 +4,21 @@ import {fetchList} from "./fetchList.js";
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
+        limit: 100
     },
     PatientsBirthday : {
         api: "report/patient/list.json",
+        limit: 100,
         additionalParams : {reportName : "PATIENTS_BIRTHDAY_REPORT"}
     },
     PatientContactDetails : {
         api: "report/patient/list.json",
+        limit: 100,
         additionalParams : {reportName : "PATIENT_CONTACT_DETAILS_REPORT"}
     },
     AppointmentDetailsList : {
         api: "report/appointment/list.json",
+        limit: 100,
         additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     }
 }
@@ -33,7 +37,7 @@ function runReport(){
     });
     console.log(inps);
     let reportP = reportsParams[reportHash];
-    fetchList(reportP.api, {...inps, ...reportP.additionalParams}).then(res => console.log(res));
+    fetchList(reportP.api, {...inps, ...reportP.additionalParams}, true, reportP.limit).then(res => console.log(res));
 }
 
 window.runReport = runReport;
