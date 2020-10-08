@@ -1,7 +1,28 @@
 import {reportModal} from "./reportModal.js";
+import {fetchList} from "./fetchList.js";
+
+const reportsParams = {
+    NewPatients : {
+        api: "report/patient/new-list.json",
+    },
+    PatientsBirthday : {
+        api: "report/patient/list.json",
+        additionalParams : {reportName : "PATIENTS_BIRTHDAY_REPORT"}
+    },
+    PatientContactDetails : {
+        api: "report/patient/list.json",
+        additionalParams : {reportName : "PATIENT_CONTACT_DETAILS_REPORT"}
+    },
+    AppointmentDetailsList : {
+        api: "report/appointment/list.json",
+        additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
+    }
+}
 
 function runReport(){
     var inps = [];
+    var reportModal = document.getElementById("reportModal");
+    var reportHash = document.location.hash.split("/").pop().split("?")[0];
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
@@ -11,6 +32,8 @@ function runReport(){
         inps.push({key: ikey, value: value, type: itype});
     });
     console.log(inps);
+    let reportP = reportsParams[reportHash];
+    fetchList(reportP.api, {...inps, ...reportP.additionalParams}).then(res => console.log(res));
 }
 
 window.runReport = runReport;

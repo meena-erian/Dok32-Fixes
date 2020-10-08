@@ -8,7 +8,7 @@
  * 
  * @return {object[] | false} Returns the list or false on failure.
  */
-async function fetchList(endpoint, params, reccursion = false, limit = 100){
+async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID){
     var start = 0;
     let queryString = "";
     for (var key in params) {
@@ -45,6 +45,6 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100){
 //await fetchList("report/patient/list.json",{reportName:"PATIENT_CONTACT_DETAILS_REPORT"}, true);
 
 // Appointment details
-await fetchList("report/appointment/list.json", {periodEnd:1602100799000,periodStart:1602014400000,reportName:"APPOINTMENT_DETAILS_REPORT"}, true)
+//await fetchList("report/appointment/list.json", {periodEnd:1602100799000,periodStart:1602014400000,reportName:"APPOINTMENT_DETAILS_REPORT"}, true)
 
 export {fetchList};
