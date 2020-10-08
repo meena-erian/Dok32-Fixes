@@ -41,7 +41,7 @@ function runReport(){
         params[inp.key] = inp.value;
     });
     let reportP = reportsParams[reportHash];
-    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit).then(res => console.log(res));
+    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress").then(res => console.log(res));
 }
 
 window.runReport = runReport;

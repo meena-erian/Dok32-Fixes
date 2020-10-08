@@ -15,8 +15,9 @@ function reportModal(){
       <div class="modal-body">
         <div class="form-group">
           <label for="sms-templates-list" class="col-form-label">Loading...</label>
-          <select class='form-control' id='sms-templates-list'>
-          </select>
+          <div class="progress">
+            <div id="report-progress" class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
