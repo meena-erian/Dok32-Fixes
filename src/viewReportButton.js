@@ -48,7 +48,7 @@ function runReport(){
     fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress")
         .then(res => {
             console.log(res);
-            downloadButton.disabled = false;
+            downloadButton.removeAttribute("disabled");
             downloadButton.setAttribute("download", "report.json");
             progressLabel.innerText = "Report Completed";
             downloadButton.setAttribute("href", 
