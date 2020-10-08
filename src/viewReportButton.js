@@ -1,5 +1,6 @@
 import {reportModal} from "./reportModal.js";
 import {fetchList} from "./fetchList.js";
+import {objArrTOCSV} from "./objArrTOCSV.js";
 
 const reportsParams = {
     NewPatients : {
@@ -49,7 +50,7 @@ function runReport(){
         .then(res => {
             console.log(res);
             downloadButton.removeAttribute("disabled");
-            downloadButton.setAttribute("download", "report.json");
+            downloadButton.setAttribute("download", "report.csv");
             progressLabel.innerText = "Report Completed";
 
             function b64EncodeUnicode(str) {
@@ -60,7 +61,7 @@ function runReport(){
 
 
             downloadButton.setAttribute("href", 
-            `data:application/octet-stream;charset=utf-8;base64,${b64EncodeUnicode(JSON.stringify(res, null, 2))}`);
+            `data:application/octet-stream;charset=utf-8;base64,${b64EncodeUnicode(objArrTOCSV(res))}`);
         });
 }
 
