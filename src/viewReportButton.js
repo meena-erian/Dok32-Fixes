@@ -29,7 +29,7 @@ function runReport(){
     var inps = [];
     var reportModal = document.getElementById("reportModal");
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
-    downloadButton.disabled = true;
+    downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
