@@ -24,7 +24,7 @@ const reportsParams = {
 }
 
 function runReport(){
-    var inps = [];
+    var inps = {};
     var reportModal = document.getElementById("reportModal");
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
@@ -36,8 +36,12 @@ function runReport(){
         inps.push({key: ikey, value: value, type: itype});
     });
     console.log(inps);
+    let params = {};
+    inps.forEach(inp => {
+        params[inp.key] = inp.value;
+    });
     let reportP = reportsParams[reportHash];
-    fetchList(reportP.api, {...inps, ...reportP.additionalParams}, true, reportP.limit).then(res => console.log(res));
+    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit).then(res => console.log(res));
 }
 
 window.runReport = runReport;
