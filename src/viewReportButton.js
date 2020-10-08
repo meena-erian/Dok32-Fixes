@@ -24,9 +24,13 @@ const reportsParams = {
 }
 
 function runReport(){
+    var downloadButton = document.getElementById("report-download-button");
+    var progressLabel = document.getElementById("report-progress-label");
     var inps = [];
     var reportModal = document.getElementById("reportModal");
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
+    downloadButton.disabled = true;
+    progressLabel.innerText = "Loading...";
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
@@ -44,7 +48,10 @@ function runReport(){
     fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress")
         .then(res => {
             console.log(res);
-            document.getElementById("report-download-button").disabled = false;
+            downloadButton.disabled = false;
+            downloadButton.setAttribute("download", "report.json");
+            progressLabel.innerText = "Report Completed";
+            downloadButton.href = `data:application/octet-stream;charset=utf-8;base64,${JSON.stringify(res, null, 2)}`;
         });
 }
 

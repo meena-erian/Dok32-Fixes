@@ -14,7 +14,7 @@ function reportModal(){
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="sms-templates-list" class="col-form-label">Loading...</label>
+          <label id="report-progress-label" for="report-progress" class="col-form-label">Loading...</label>
           <div class="progress">
             <div id="report-progress" class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
