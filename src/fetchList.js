@@ -35,6 +35,10 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
             if(list.length === totalCount) break;
         }
+        if(!response.data.list) {
+            console.log("Error! Server response: ", response);
+            break;
+        }
         if(response.data.list.length < limit ) break;
         start = start + limit;
     }
