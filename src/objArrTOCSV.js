@@ -30,8 +30,14 @@ function getJSONTableHeader(jsonArr){
  * @param {any} val 
  */
 function escapeCSVValue(val){
-    if(typeof val === "object") val = val.name;
-    return `"${val.replace(/"/g, `""`)}"`;
+    switch(typeof val){
+        case "number":
+            return val.toString();
+        case "string":
+            return `"${val.replace(/"/g, `""`)}"`;
+        case "object":
+            return `"${val.name.replace(/"/g, `""`)}"`;
+    }
 }
 
 /**
