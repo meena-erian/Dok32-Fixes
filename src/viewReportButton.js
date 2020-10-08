@@ -59,9 +59,11 @@ function runReport(){
                 }))
             }
 
+            var CSVstr = objArrTOCSV(res);
+            console.log(CSVstr);
 
             downloadButton.setAttribute("href", 
-            `data:application/octet-stream;charset=utf-8;base64,${b64EncodeUnicode(objArrTOCSV(res))}`);
+            `data:application/octet-stream;charset=utf-8;base64,${btoa(CSVstr)}`);
         });
 }
 
