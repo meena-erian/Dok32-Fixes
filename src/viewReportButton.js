@@ -51,8 +51,16 @@ function runReport(){
             downloadButton.removeAttribute("disabled");
             downloadButton.setAttribute("download", "report.json");
             progressLabel.innerText = "Report Completed";
+
+            function b64EncodeUnicode(str) {
+                return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                    return String.fromCharCode(parseInt(p1, 16))
+                }))
+            }
+
+
             downloadButton.setAttribute("href", 
-            `data:application/octet-stream;charset=utf-8;base64,${btoa(JSON.stringify(res, null, 2))}`);
+            `data:application/octet-stream;charset=utf-8;base64,${b64EncodeUnicode(JSON.stringify(res, null, 2))}`);
         });
 }
 
@@ -69,5 +77,6 @@ function viewReportButton(){
     exportButton.innerText = "View Report";
     return exportButton;
 }
+
 
 export {viewReportButton};
