@@ -38,7 +38,13 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100){
     return list;
 }
 
+// Patient birthday
 //await fetchList("report/patient/list.json", {month:6,reportName:"PATIENTS_BIRTHDAY_REPORT"}, true);
+
+// Patient Contact details
 //await fetchList("report/patient/list.json",{reportName:"PATIENT_CONTACT_DETAILS_REPORT"}, true);
+
+// Appointment details
+await fetchList("report/appointment/list.json", {periodEnd:1602100799000,periodStart:1602014400000,reportName:"APPOINTMENT_DETAILS_REPORT"}, true)
 
 export {fetchList};
