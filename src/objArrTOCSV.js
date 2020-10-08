@@ -32,6 +32,10 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val){
     switch(typeof val){
         case "number":
+            if(val > 1600000000000 && val < 1699999999999){
+                let date = new Date(val);
+                return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+            }
             return val.toString();
         case "string":
             return `"${val.replace(/"/g, `""`)}"`;
