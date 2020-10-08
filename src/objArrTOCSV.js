@@ -39,7 +39,7 @@ function escapeCSVValue(val){
  * @param {object} jsonArr 
  */
 function objArrTOCSV(jsonArr){
-    var header = getJSONTableHeader(json);
+    var header = getJSONTableHeader(jsonArr);
     var CSVstr = "";
     header.forEach(column => {
         if(CSVstr.length) CSVstr += ",";
