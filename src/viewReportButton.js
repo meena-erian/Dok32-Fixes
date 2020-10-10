@@ -58,21 +58,26 @@ function runReport(){
     fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
         .then(res => {
             console.log(res);
-            downloadButton.removeAttribute("disabled");
-            downloadButton.setAttribute("download", "report.csv");
-            progressLabel.innerText = "Report Completed";
+            if(res.length){
+                downloadButton.removeAttribute("disabled");
+                downloadButton.setAttribute("download", "report.csv");
+                progressLabel.innerText = "Report Completed";
 
-            function b64EncodeUnicode(str) {
-                return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-                    return String.fromCharCode(parseInt(p1, 16))
-                }))
+                function b64EncodeUnicode(str) {
+                    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                        return String.fromCharCode(parseInt(p1, 16))
+                    }))
+                }
+
+                var CSVstr = objArrTOCSV(res);
+                console.log(CSVstr);
+
+                downloadButton.setAttribute("href", 
+                `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
             }
-
-            var CSVstr = objArrTOCSV(res);
-            console.log(CSVstr);
-
-            downloadButton.setAttribute("href", 
-            `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
+            else{
+                progressLabel.innerText = "Report Completed. Nothing matches search criteria!";
+            }
         });
 }
 
