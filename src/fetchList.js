@@ -8,7 +8,7 @@
  * 
  * @return {object[] | false} Returns the list or false on failure.
  */
-async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID){
+async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID){
     var start = 0;
     let queryString = "";
     for (var key in params) {
@@ -33,6 +33,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             console.log(completionRatio);
             progressElement.style.width = `${completionRatio}%`;
             progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
+            counterID.innerText = `${list.length}/${totalCount}`;
             if(list.length === totalCount) break;
         }
         if(!response.data.list) {

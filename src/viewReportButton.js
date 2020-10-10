@@ -46,7 +46,7 @@ function runReport(){
         params[inp.key] = inp.value;
     });
     let reportP = reportsParams[reportHash];
-    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress")
+    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
         .then(res => {
             console.log(res);
             downloadButton.removeAttribute("disabled");

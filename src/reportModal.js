@@ -14,7 +14,7 @@ function reportModal(){
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label id="report-progress-label" for="report-progress" class="col-form-label">Loading...</label>
+          <label for="report-progress" class="col-form-label"><b id="report-progress-label">Loading...</b><i id="report-progress-counter"></i></label>
           <div class="progress">
             <div id="report-progress" class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
