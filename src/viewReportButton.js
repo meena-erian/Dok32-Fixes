@@ -86,7 +86,7 @@ function viewReportButton(){
     exportButton.id = "view-report-button";
     exportButton.setAttribute("onclick", `$("#reportModal").modal();`);
     exportButton.onclick = runReport;
-    exportButton.innerText = "View Report";
+    exportButton.innerText = "Run Report";
     return exportButton;
 }
 
