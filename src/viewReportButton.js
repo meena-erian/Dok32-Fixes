@@ -27,6 +27,11 @@ const reportsParams = {
 function runReport(){
     var downloadButton = document.getElementById("report-download-button");
     var progressLabel = document.getElementById("report-progress-label");
+    var progressBar = document.getElementById("report-progress");
+    var progressCounter = document.getElementById("report-progress-counter");
+    progressBar.style.width = `${00}%`;
+    progressBar.setAttribute("aria-valuenow", `${00}`);
+    progressCounter.innerText = "";
     var inps = [];
     var reportModal = document.getElementById("reportModal");
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
@@ -46,6 +51,10 @@ function runReport(){
         params[inp.key] = inp.value;
     });
     let reportP = reportsParams[reportHash];
+    if(reportP === undefined ){
+        alert("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena");
+    }
+    else
     fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
         .then(res => {
             console.log(res);
