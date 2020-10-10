@@ -87,7 +87,7 @@ function viewReportButton(){
     document.body.append(reportModal());
     console.log("Dok32 Fixes extension: Adding new report function button \"View Report\"");
     let exportButton = document.createElement("button");
-    exportButton.className = "btn btn-success btn-sm";
+    exportButton.className = "btn btn-dark btn-sm";
     exportButton.id = "view-report-button";
     exportButton.setAttribute("onclick", `$("#reportModal").modal();`);
     exportButton.onclick = runReport;
