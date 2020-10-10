@@ -62,7 +62,14 @@ function runReport(){
     console.log(inps);
     let params = {};
     inps.forEach(inp => {
-        params[inp.key] = inp.value;
+        if(inp.type === "date"){
+            console.log("Converting: inp: ", inp)
+            let [day, month, year] = inp.value.split("/");
+            params[inp.key] = `${month}/${day}/${year}`;
+        }
+        else{
+            params[inp.key] = inp.value;
+        }
     });
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
