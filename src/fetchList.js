@@ -27,17 +27,24 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         }
         list = list.concat(response.data.list);
         let totalCount = response.data.totalCount;
-        if(totalCount && progressbarID) {
+        if(totalCount !== undefined && progressbarID) {
             let completionRatio = Math.round(list.length / totalCount * 100);
             let progressElement = document.getElementById(progressbarID);
             let counterElement = document.getElementById(counterID);
             console.log(completionRatio);
-            progressElement.style.width = `${completionRatio}%`;
-            progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
-            counterElement.innerText = `${list.length}/${totalCount}`;
+            if(completionRatio === NaN){
+                progressElement.style.width = `${100}%`;
+                progressElement.setAttribute("aria-valuenow", `${100}`);
+                counterElement.innerText = `0/0 (Nothing matches search criteria)`;
+            }
+            else{
+                progressElement.style.width = `${completionRatio}%`;
+                progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
+                counterElement.innerText = `${list.length}/${totalCount}`;
+            }
             if(list.length === totalCount) break;
         }
-        if(!response.data.list) {
+        if(!response.data) {
             console.log("Error! Server response: ", response);
             break;
         }

@@ -84,12 +84,6 @@ function runReport(){
                 downloadButton.setAttribute("download", `${camelCaseToNorml(reportHash)} Report ${new Date().toDateString()}.csv`);
                 progressLabel.innerText = "Report Completed";
 
-                function b64EncodeUnicode(str) {
-                    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-                        return String.fromCharCode(parseInt(p1, 16))
-                    }))
-                }
-
                 var CSVstr = objArrTOCSV(res);
                 console.log(CSVstr);
 
@@ -97,7 +91,7 @@ function runReport(){
                 `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
             }
             else{
-                progressLabel.innerText = "Report Completed. Nothing matches search criteria!";
+                progressLabel.innerText = "Report Completed.";
             }
         });
 }
