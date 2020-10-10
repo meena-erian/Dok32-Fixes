@@ -2,6 +2,20 @@ import {reportModal} from "./reportModal.js";
 import {fetchList} from "./fetchList.js";
 import {objArrTOCSV} from "./objArrTOCSV.js";
 
+/**
+ * 
+ * @param {string} str 
+ */
+function camelCaseToNorml(str){
+    return str 
+    // insert a space before all caps
+     .replace(/([A-Z])/g, ' $1')
+     // uppercase the first character
+     .replace(/^./, function(str){ return str.toUpperCase(); })
+}
+
+
+
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
@@ -60,7 +74,7 @@ function runReport(){
             console.log(res);
             if(res.length){
                 downloadButton.removeAttribute("disabled");
-                downloadButton.setAttribute("download", "report.csv");
+                downloadButton.setAttribute("download", `${camelCaseToNorml(reportHash)} Report ${new Date().toDateString()}.csv`);
                 progressLabel.innerText = "Report Completed";
 
                 function b64EncodeUnicode(str) {
