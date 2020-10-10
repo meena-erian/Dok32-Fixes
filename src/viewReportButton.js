@@ -63,7 +63,7 @@ function runReport(){
             console.log(CSVstr);
 
             downloadButton.setAttribute("href", 
-            `data:application/octet-stream;charset=utf-8;base64,${btoa(CSVstr)}`);
+            `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
         });
 }
 
