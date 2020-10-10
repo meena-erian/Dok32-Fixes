@@ -29,8 +29,8 @@ function runReport(){
     var progressLabel = document.getElementById("report-progress-label");
     var progressBar = document.getElementById("report-progress");
     var progressCounter = document.getElementById("report-progress-counter");
-    progressBar.style.width = `${00}%`;
-    progressBar.setAttribute("aria-valuenow", `${00}`);
+    progressBar.style.width = `${0}%`;
+    progressBar.setAttribute("aria-valuenow", `${0}`);
     progressCounter.innerText = "";
     var inps = [];
     var reportModal = document.getElementById("reportModal");
