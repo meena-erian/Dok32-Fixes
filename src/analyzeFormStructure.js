@@ -21,7 +21,6 @@ function analyzeFormStructure(htmlForm){
                 let options = model.querySelectorAll("option");
                 if(options.length < 3){
                     model.click();
-                    console.log("Sleeping for 1 second");
                     options = model.querySelectorAll("option");
                 }
                 options.forEach(opt => {
