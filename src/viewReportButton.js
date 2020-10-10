@@ -12,7 +12,7 @@ const reportsParams = {
         limit: 100,
         additionalParams : {reportName : "PATIENTS_BIRTHDAY_REPORT"}
     },
-    PatientContactDetails : {
+    /*PatientContactDetails : {
         api: "report/patient/list.json",
         limit: 100,
         additionalParams : {reportName : "PATIENT_CONTACT_DETAILS_REPORT"}
@@ -21,7 +21,7 @@ const reportsParams = {
         api: "report/appointment/list.json",
         limit: 100,
         additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
-    }
+    }*/
 }
 
 function runReport(){
