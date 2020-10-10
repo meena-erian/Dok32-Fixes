@@ -30,10 +30,11 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         if(totalCount && progressbarID) {
             let completionRatio = Math.round(list.length / totalCount * 100);
             let progressElement = document.getElementById(progressbarID);
+            let counterElement = document.getElementById(counterID);
             console.log(completionRatio);
             progressElement.style.width = `${completionRatio}%`;
             progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
-            counterID.innerText = `${list.length}/${totalCount}`;
+            counterElement.innerText = `${list.length}/${totalCount}`;
             if(list.length === totalCount) break;
         }
         if(!response.data.list) {
