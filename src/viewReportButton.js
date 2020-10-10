@@ -55,21 +55,16 @@ function runReport(){
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
         let value = inp.value;
-        if(itype === "date") value = new Date(value).getTime();
-
+        if(itype === "date") {
+            let [day, month, year] = value.split("/");
+            value = new Date(`${month}/${day}/${year}`).getTime();
+        }
         inps.push({key: ikey, value: value, type: itype});
     });
     console.log(inps);
     let params = {};
     inps.forEach(inp => {
-        if(inp.type === "date"){
-            console.log("Converting: inp: ", inp)
-            let [day, month, year] = inp.value.split("/");
-            params[inp.key] = `${month}/${day}/${year}`;
-        }
-        else{
-            params[inp.key] = inp.value;
-        }
+        params[inp.key] = inp.value;
     });
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
