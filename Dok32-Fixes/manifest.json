@@ -22,5 +22,11 @@
     "https://everlast-office.dok32.com/*",
     "http://everlast-office.dok32.com/*",
     "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://everlast-office.dok32.com/*"],
+      "js": ["inject.js"]
+    }
   ]
 }
