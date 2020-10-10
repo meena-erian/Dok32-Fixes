@@ -8,6 +8,7 @@ function addFunctionButtons(){
 	greenButtons.forEach((btn) => {
 		if (btn.innerText.includes("XLS")) {
             let form = btn.parentElement;
+            form.setAttribute("Meena-extension-loaded", true);
             console.log(bindForm(form));
             btn.parentElement.append("  ");
             //btn.parentElement.append(downloadCSVButton());
