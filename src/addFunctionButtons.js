@@ -1,4 +1,4 @@
-import {downloadCSVButton} from "./downloadCSVButton.js";
+//import {downloadCSVButton} from "./downloadCSVButton.js";
 import {sendSMSButton} from "./sendSMSButton.js";
 import {viewReportButton} from "./viewReportButton.js";
 import {bindForm} from "./bindForm.js";
@@ -10,8 +10,8 @@ function addFunctionButtons(){
             let form = btn.parentElement;
             console.log(bindForm(form));
             btn.parentElement.append("  ");
-            btn.parentElement.append(downloadCSVButton());
-            btn.parentElement.append("  ");
+            //btn.parentElement.append(downloadCSVButton());
+            //btn.parentElement.append("  ");
             btn.parentElement.append(sendSMSButton());
             btn.parentElement.append("  ");
             btn.parentElement.append(viewReportButton());
