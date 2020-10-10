@@ -32,7 +32,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             let progressElement = document.getElementById(progressbarID);
             let counterElement = document.getElementById(counterID);
             console.log(completionRatio);
-            if(completionRatio === NaN){
+            if(typeof completionRatio !== 'number'){
                 progressElement.style.width = `${100}%`;
                 progressElement.setAttribute("aria-valuenow", `${100}`);
                 counterElement.innerText = `0/0 (Nothing matches search criteria)`;

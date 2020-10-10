@@ -6,12 +6,12 @@ import {objArrTOCSV} from "./objArrTOCSV.js";
  * 
  * @param {string} str 
  */
-function camelCaseToNorml(str){
+function PascalCaseToNorml(str){
     return str 
     // insert a space before all caps
-     .replace(/([A-Z])/g, ' $1')
+     .replace(/([a-z])([A-Z])/g, '$1 $2')
      // uppercase the first character
-     .replace(/^./, function(str){ return str.toUpperCase(); })
+     //.replace(/^./, function(str){ return str.toUpperCase(); })
 }
 
 
@@ -76,7 +76,7 @@ function runReport(){
             console.log(res);
             if(res.length){
                 downloadButton.removeAttribute("disabled");
-                downloadButton.setAttribute("download", `${camelCaseToNorml(reportHash)} Report ${new Date().toDateString()}.csv`);
+                downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
                 progressLabel.innerText = "Report Completed";
 
                 var CSVstr = objArrTOCSV(res);
