@@ -40,7 +40,8 @@ function escapeCSVValue(val){
         case "string":
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
-            return `"${val.name.replace(/"/g, `""`)}"`;
+            if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
+            else return val.name;
     }
 }
 
