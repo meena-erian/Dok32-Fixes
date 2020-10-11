@@ -1,7 +1,7 @@
 (function () {
 
 	let gitProxy = "https://everlast.portacode.com/Dok32-fixes-gitproxy";
-	let version = "master";
+	let version = "dev";
 	let folder = "src";
 
 
