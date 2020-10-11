@@ -17,7 +17,7 @@ function camelCaseToNorml(str){
  * 
  * @returns {object} An array of all possible keys
  */
-function getJSONTableHeader(objArr){
+function getObjArrTableHeader(objArr){
     var merge = {};
     objArr.forEach(element => {
         Object.assign(merge, element);
@@ -29,7 +29,7 @@ function getJSONTableHeader(objArr){
  * 
  * @param {any} val 
  */
-function escapeCSVValue(val){
+function escapeDateValue(val){
     switch(typeof val){
         case "number":
             if(val > 80000000000 && val < 1999999999999){
@@ -38,10 +38,9 @@ function escapeCSVValue(val){
             }
             return val.toString();
         case "string":
-            return `"${val.replace(/"/g, `""`)}"`;
+            return val;
         case "object":
-            if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
-            else return val.name;
+            return val.name;
     }
 }
 
@@ -49,22 +48,33 @@ function escapeCSVValue(val){
  * 
  * @param {object} objArr 
  */
-function objArrTOCSV(objArr){
-    var header = getJSONTableHeader(objArr);
-    console.log("Header:", header);
-    var CSVstr = "";
+function objArrTOTable(objArr){
+    var header = getObjArrTableHeader(objArr);
+    //console.log("Header:", header);
+    var table = document.createElement("table");
+    table.className = "table table-striped";
+    var tableHeader = document.createElement("thead");
+    var tableHeaderRow = document.createElement("tr");
+    var tableBody = document.createElement("tbody");
+    tableHeader.append(tableHeaderRow);
+    table.append(tableHeader);
+    table.append(tableBody);
     header.forEach(column => {
-        if(CSVstr.length) CSVstr += ",";
-        CSVstr += escapeCSVValue(camelCaseToNorml(column));
+        var th = document.createElement("th");
+        th.setAttribute("scope", "col");
+        th.innerText = camelCaseToNorml(column);
+        tableHeaderRow.append(th);
     })
     objArr.forEach(row => {
-        CSVstr += "\n";
-        header.forEach((key, index) => {
-            if(index !== 0) CSVstr += ",";
-            CSVstr += escapeCSVValue(row[key]);
+        var tr = document.createElement("tr");
+        tableBody.append(tr);
+        header.forEach((key) => {
+            var td = document.createElement("td");
+            td.innerText = escapeDateValue(row[key]);
+            tr.append(td);
         });
     });
-    return CSVstr;
+    return table;
 }
 
-export {objArrTOCSV};
+export {objArrTOTable};

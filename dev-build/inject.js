@@ -1,7 +1,7 @@
 (function () {
 
 	let gitProxy = "https://everlast.portacode.com/Dok32-fixes-gitproxy";
-	let version = "master";
+	let version = "dev";
 	let folder = "src";
 
 
@@ -34,7 +34,11 @@
 
 	components.forEach(comp => preload(comp));
 
-	import(`${base}/index.js`).then(indexModule =>
+	let inDocScript = document.createElement("script");
+	inDocScript.innerHTML = `
+	import("${base}/index.js").then(indexModule =>
 		indexModule.default()
 	);
+	`;
+	document.body.append(inDocScript);
 })();
