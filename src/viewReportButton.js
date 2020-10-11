@@ -2,6 +2,7 @@ import {reportModal} from "./reportModal.js";
 import {fetchList} from "./fetchList.js";
 import {objArrTOCSV} from "./objArrTOCSV.js";
 import {objArrTOTable} from "./objArrTOTable.js";
+import {findInAngularApp} from "./findInAngularApp.js";
 
 /**
  * 
@@ -54,8 +55,6 @@ function runReport(){
     downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
     tableResults.innerHTML = "";
-    console.log("Searching for Angular: ", window.angular);
-    console.log("Searching for jQuery:", window.$);
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
@@ -66,7 +65,9 @@ function runReport(){
         }
         inps.push({key: ikey, value: value, type: itype});
     });
-    console.log(inps);
+    console.log("Form Analizer Data: ", inps);
+    console.log("Angular hacker data: ", findInAngularApp("searchParams"));
+
     let params = {};
     inps.forEach(inp => {
         params[inp.key] = inp.value;
