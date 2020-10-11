@@ -1,6 +1,7 @@
 import {reportModal} from "./reportModal.js";
 import {fetchList} from "./fetchList.js";
 import {objArrTOCSV} from "./objArrTOCSV.js";
+import {objArrTOTable} from "./objArrTOTable.js";
 
 /**
  * 
@@ -43,6 +44,7 @@ function runReport(){
     var progressLabel = document.getElementById("report-progress-label");
     var progressBar = document.getElementById("report-progress");
     var progressCounter = document.getElementById("report-progress-counter");
+    var tableResults = document.getElementById("report-results");
     progressBar.style.width = `${0}%`;
     progressBar.setAttribute("aria-valuenow", `${0}`);
     progressCounter.innerText = "";
@@ -51,6 +53,7 @@ function runReport(){
     var reportHash = document.location.hash.split("/").pop().split("?")[0];
     downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
+    tableResults.innerHTML = "";
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
@@ -78,7 +81,7 @@ function runReport(){
                 downloadButton.removeAttribute("disabled");
                 downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
                 progressLabel.innerText = "Report Completed";
-
+                tableResults.append(objArrTOTable(res));
                 var CSVstr = objArrTOCSV(res);
                 console.log(CSVstr);
 
