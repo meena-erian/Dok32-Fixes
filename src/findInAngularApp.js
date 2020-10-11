@@ -4,11 +4,11 @@ function _findInAngularApp(scope, key){
     return scope[key];
   }
   if(scope.$$childTail){
-    let ret = findInAngularApp(scope.$$childTail, key);
+    let ret = _findInAngularApp(scope.$$childTail, key);
     if(ret !== undefined) return ret;
   }
   if(scope.$$prevSibling){
-    let ret = findInAngularApp(scope.$$prevSibling, key);
+    let ret = _findInAngularApp(scope.$$prevSibling, key);
     if(ret !== undefined) return ret;
   }
 }
