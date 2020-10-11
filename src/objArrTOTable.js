@@ -52,7 +52,7 @@ function objArrTOTable(objArr){
     var header = getObjArrTableHeader(objArr);
     //console.log("Header:", header);
     var table = document.createElement("table");
-    table.className = "table";
+    table.className = "table table-striped";
     var tableHeader = document.createElement("thead");
     var tableHeaderRow = document.createElement("tr");
     var tableBody = document.createElement("tbody");
