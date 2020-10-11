@@ -19,11 +19,23 @@ function reportModal(){
             <div id="report-progress" class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
+        <div class="form-group">
+          <div id="report-results" class='collapse'>Report will show here...</div>
+        </div>
       </div>
       <div class="modal-footer">
-        <a id="report-download-button" type="button" class="btn btn-success" disabled>Download</a>
+        <button id="report-result-toggle" class="btn btn-success" data-toggle="collapse" data-target="#report-results">Show Report</button>
+        <a id="report-download-button" type="button" class="btn btn-success" disabled>Download Report</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
+      <script>
+  $('button#report-result-toggle').click(function(){
+      $(this).text(function(i,old){
+          console.log(i);
+          return old=='Show Report' ?  'Hide Report' : 'Show Report';
+      });
+  });
+      </script>
     </div>
     
   </div>
