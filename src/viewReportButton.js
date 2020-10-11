@@ -54,7 +54,8 @@ function runReport(){
     downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
     tableResults.innerHTML = "";
-    console.log(window.angular);
+    console.log("Searching for Angular: ", window.angular);
+    console.log("Searching for jQuery:", window.$);
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
