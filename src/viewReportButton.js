@@ -41,6 +41,7 @@ const reportsParams = {
 }
 
 function runReport(){
+    window.$("#reportModal").modal();
     var downloadButton = document.getElementById("report-download-button");
     var progressLabel = document.getElementById("report-progress-label");
     var progressBar = document.getElementById("report-progress");
@@ -55,6 +56,7 @@ function runReport(){
     downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
     tableResults.innerHTML = "";
+    /*
     document.querySelectorAll("[form-input-element]").forEach( inp =>{
         let itype = inp.getAttribute("form-input-type");
         let ikey = inp.getAttribute("form-input-key");
@@ -72,6 +74,11 @@ function runReport(){
     inps.forEach(inp => {
         params[inp.key] = inp.value;
     });
+    */
+    let params = findInAngularApp("searchParams");
+    if(params.start) delete params.start;
+    if(params.limit) delete params.limit;
+
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
         alert("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena");
@@ -105,7 +112,7 @@ function viewReportButton(){
     let exportButton = document.createElement("button");
     exportButton.className = "btn btn-dark btn-sm";
     exportButton.id = "view-report-button";
-    exportButton.setAttribute("onclick", `$("#reportModal").modal();`);
+    //exportButton.setAttribute("onclick", `$("#reportModal").modal();`);
     exportButton.onclick = runReport;
     exportButton.innerText = "Run Report";
     return exportButton;
