@@ -56,26 +56,8 @@ function runReport(){
     downloadButton.setAttribute("disabled",  "true");
     progressLabel.innerText = "Loading...";
     tableResults.innerHTML = "";
-    /*
-    document.querySelectorAll("[form-input-element]").forEach( inp =>{
-        let itype = inp.getAttribute("form-input-type");
-        let ikey = inp.getAttribute("form-input-key");
-        let value = inp.value;
-        if(itype === "date") {
-            let [day, month, year] = value.split("/");
-            value = new Date(`${month}/${day}/${year}`).getTime();
-        }
-        inps.push({key: ikey, value: value, type: itype});
-    });
-    console.log("Form Analizer Data: ", inps);
-    console.log("Angular hacker data: ", findInAngularApp("searchParams"));
-
-    let params = {};
-    inps.forEach(inp => {
-        params[inp.key] = inp.value;
-    });
-    */
-    let params = findInAngularApp("searchParams");
+    var params = {};
+    Object.assign(params, findInAngularApp("searchParams"));
     if(params.start) delete params.start;
     if(params.limit) delete params.limit;
 
@@ -112,7 +94,6 @@ function viewReportButton(){
     let exportButton = document.createElement("button");
     exportButton.className = "btn btn-dark btn-sm";
     exportButton.id = "view-report-button";
-    //exportButton.setAttribute("onclick", `$("#reportModal").modal();`);
     exportButton.onclick = runReport;
     exportButton.innerText = "Run Report";
     return exportButton;
