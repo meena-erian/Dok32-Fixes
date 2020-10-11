@@ -41,7 +41,6 @@ const reportsParams = {
 }
 
 function runReport(){
-    window.$("#reportModal").modal();
     var downloadButton = document.getElementById("report-download-button");
     var progressLabel = document.getElementById("report-progress-label");
     var progressBar = document.getElementById("report-progress");
@@ -65,25 +64,27 @@ function runReport(){
     if(reportP === undefined ){
         alert("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena");
     }
-    else
-    fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
-        .then(res => {
-            console.log(res);
-            if(res.length){
-                downloadButton.removeAttribute("disabled");
-                downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
-                progressLabel.innerText = "Report Completed";
-                tableResults.append(objArrTOTable(res));
-                var CSVstr = objArrTOCSV(res);
-                console.log(CSVstr);
+    else {
+        window.$("#reportModal").modal();
+        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
+            .then(res => {
+                console.log(res);
+                if(res.length){
+                    downloadButton.removeAttribute("disabled");
+                    downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
+                    progressLabel.innerText = "Report Completed";
+                    tableResults.append(objArrTOTable(res));
+                    var CSVstr = objArrTOCSV(res);
+                    console.log(CSVstr);
 
-                downloadButton.setAttribute("href", 
-                `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
-            }
-            else{
-                progressLabel.innerText = "Report Completed.";
-            }
-        });
+                    downloadButton.setAttribute("href", 
+                    `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
+                }
+                else{
+                    progressLabel.innerText = "Report Completed.";
+                }
+            });
+    }
 }
 
 window.runReport = runReport;
