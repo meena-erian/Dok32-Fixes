@@ -58,8 +58,8 @@ function runReport(){
     tableResults.innerHTML = "";
     var params = {};
     Object.assign(params, findInAngularApp("searchParams"));
-    if(params.start) delete params.start;
-    if(params.limit) delete params.limit;
+    if(params.start !== undefined) delete params.start;
+    if(params.limit !== undefined) delete params.limit;
 
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){

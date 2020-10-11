@@ -12,7 +12,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
     var start = 0;
     let queryString = "";
     for (var key in params) {
-        if(params[key] !== undefined){
+        if(params[key] !== undefined && params[key] !== null){
             if (queryString != "") queryString += "&";
             queryString += key + "=" + encodeURIComponent(params[key]);
         }
