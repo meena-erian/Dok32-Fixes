@@ -17,11 +17,90 @@ function PascalCaseToNorml(str){
 }
 
 
+async function getPatientByChart(patient){
+    if(!patient.chartNumber){
+        console.warn("Dok32 Fixes- getPatientByChart: Error! Chart number not set!");
+    } 
+    var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
+    if(results.length === 1){
+        if(results[0].chartNumber === patient.chartNumber){
+            Object.assign(patient, results[0]);
+        }
+        else{
+            console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
+        }
+    }
+    else{
+        results = results.filter(p => p.chartNumber === patient.chartNumber);
+        if(results.length === 1) Object.assign(patient, results[0]);
+        else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
+        else {
+            Object.assign(patient, results[results.length - 1]);
+            alert(`Error! Multiple patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
+        }
+    }
+    return patient;
+}
+
+async function getPatientByKey(patient){
+    if(!patient.patientKey){
+        console.warn("Dok32 Fixes- getPatientByKey: Error! patient key not set!");
+    } 
+    var results = await fetchList(`report/patient/list.json`, {patientKeys: patient.patientKey, reportName:"PATIENT_CONTACT_DETAILS_REPORT"}, true, 10);
+    if(results.length === 1){
+        Object.assign(patient, results[0]);
+    }
+    else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByKey: Error! No patient found with Patient Key: ${patient.patientKey}`);
+    else {
+        Object.assign(patient, results[results.length - 1]);
+        alert(`Error! Multiple patients found with the Patient Key ${patient.patientKey}. \nThe last one was used`);
+    }
+    return patient;
+}
+
+
+/**
+ * Function that takes an array of objects containing the chartNumber
+ *   and assignes to each the patient's contact details.
+ * 
+ * @note: recordArr allows a maximum size of 10 records
+ * 
+ * @param {object[]} recordArr DB records containing the chartNumber prop
+ * @returns {object[]} DB records after adding contact details to each
+ */
+/*
+async function mergeWithPatientContactDetails(recordArr){
+    recordArr.forEach((patient, index) => {
+        var patientWithKey = await getPatientByChart(patient);
+        if(patientWithKey.patientKey){
+            patientWithKey = await getPatientByKey(patientWithKey);
+        }
+        recordArr[index] = patientWithKey;
+    });
+    return recordArr;
+}*/
+
+
+/**
+ * Function that takes a an object containing the chartNumber of a patient 
+ *   and assignes to it the patient's contact details.
+ * @param {object} record DB record containing the chartNumber prop
+ * @returns {object} The DB record after adding to it its contact details
+ */
+
+async function mergeWithPatientContactDetails(record){
+    var patientWithKey = await getPatientByChart(record);
+    if(patientWithKey.patientKey){
+        patientWithKey = await getPatientByKey(patientWithKey);
+    }
+    return patientWithKey;
+}
 
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
-        limit: 100
+        limit: 100,
+        mergeFunc: mergeWithPatientContactDetails
     },
     PatientsBirthday : {
         api: "report/patient/list.json",
@@ -66,7 +145,7 @@ function runReport(){
     }
     else {
         window.$("#reportModal").modal();
-        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
+        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc)
             .then(res => {
                 console.log(res);
                 if(res.length){

@@ -8,7 +8,7 @@
  * 
  * @return {object[] | false} Returns the list or false on failure.
  */
-async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID){
+async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID, mergeFunc){
     var start = 0;
     let queryString = "";
     for (var key in params) {
@@ -26,6 +26,9 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             console.log("Some error occured while trying to fetch the list from the API");
             console.log(response);
             return false;
+        }
+        if(typeof mergeFunc === "function"){
+            await response.data.list.map(mergeFunc);
         }
         list = list.concat(response.data.list);
         let totalCount = response.data.totalCount;
