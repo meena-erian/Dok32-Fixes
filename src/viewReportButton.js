@@ -150,7 +150,8 @@ function runReport(){
                 console.log(res);
                 if(res.length){
                     downloadButton.removeAttribute("disabled");
-                    downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
+                    let date = new Date();
+                    downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - ${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.csv`);
                     progressLabel.innerText = "Report Completed";
                     tableResults.append(objArrTOTable(res));
                     var CSVstr = objArrTOCSV(res);
