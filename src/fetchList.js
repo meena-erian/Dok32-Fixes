@@ -28,9 +28,12 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             return false;
         }
         if(typeof mergeFunc === "function"){
-            await response.data.list.map(mergeFunc);
+            await Promise.all(response.data.list.map(mergeFunc));
         }
-        list = list.concat(response.data.list);
+        else{
+            list = list.concat(response.data.list);
+        }
+        
         let totalCount = response.data.totalCount;
         if(totalCount !== undefined && progressbarID) {
             let completionRatio = Math.round(list.length / totalCount * 100);
