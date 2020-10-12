@@ -36,7 +36,7 @@ async function getPatientByChart(patient){
         else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
         else {
             Object.assign(patient, results[results.length - 1]);
-            alert(`Error! Multiple patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
+            alert(`Error! ${results.length} patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
         }
     }
     return patient;
