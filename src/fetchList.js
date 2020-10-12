@@ -28,7 +28,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             return false;
         }
         if(typeof mergeFunc === "function"){
-            let results = response.data.list.map(async p => await mergeFunc(p));
+            let results = await Promise.all(response.data.list.map(async p => await mergeFunc(p)));
             console.log(results);
             list = list.concat(results);
         }
