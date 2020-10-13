@@ -26,3 +26,5 @@ function toast(title, body, type = "warning"){
     var thisTost = createToast(title, body, type);
     toastStack.append(thisTost);
 }
+
+export {toast};
