@@ -17,27 +17,30 @@ function PascalCaseToNorml(str){
      //.replace(/^./, function(str){ return str.toUpperCase(); })
 }
 
+var duplicateCharts = {};
 
 async function getPatientByChart(patient){
     if(!patient.chartNumber){
-        console.warn("Dok32 Fixes- getPatientByChart: Error! Chart number not set!");
-    } 
+        toast("Error!", "Chart number not set!");
+    }
+    if(duplicateCharts[patient.chartNumber] !== undefined) return undefined;
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
         if(results[0].chartNumber === patient.chartNumber){
             Object.assign(patient, results[0]);
         }
         else{
-            console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
+            toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
         }
     }
     else{
         results = results.filter(p => p.chartNumber === patient.chartNumber);
         if(results.length === 1) Object.assign(patient, results[0]);
-        else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
+        else if(results.length === 0) toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
         else {
             Object.assign(patient, results[results.length - 1]);
             toast(`Error!`, `${results.length} patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
+            duplicateCharts[patient.chartNumber] = true;
         }
     }
     return patient;
@@ -46,6 +49,7 @@ async function getPatientByChart(patient){
 
 
 async function getPatientByKey(patient){
+    if(patient === undefined) return undefined;
     if(!patient.patientKey){
         console.warn("Dok32 Fixes- getPatientByKey: Error! patient key not set!");
     } 
@@ -144,7 +148,7 @@ function runReport(){
 
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
-        toast("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena", "info");
+        toast("", "Sorry for inconvenience! This button is not yet compatible with this report.(<br /><br /> Kind regards,<br /> Meena", "info");
     }
     else {
         window.$("#reportModal").modal();

@@ -3,7 +3,7 @@ toastStackWrapper.setAttribute("aria-live", "polite");
 toastStackWrapper.setAttribute("aria-atomic", "true");
 toastStackWrapper.style = "position: relative; min-height: 200px;";
 var toastStack = document.createElement("DIV");
-toastStack.style = "position: fixed; top: 65px; right: 15px;";
+toastStack.style = "position: fixed; top: 65px; right: 35px; z-index: 9991;";
 toastStackWrapper.append(toastStack);
 document.body.append(toastStackWrapper);
 
