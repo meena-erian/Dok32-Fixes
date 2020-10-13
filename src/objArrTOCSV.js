@@ -38,10 +38,13 @@ function escapeCSVValue(val){
             }
             return val.toString();
         case "string":
+            if(val.toUpperCase() === "NONE@NONE.COM") return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
             else return val.name;
+        case "undefined":
+            return "";
     }
 }
 

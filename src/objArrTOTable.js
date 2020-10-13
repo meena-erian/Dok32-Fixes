@@ -38,9 +38,12 @@ function escapeDateValue(val){
             }
             return val.toString();
         case "string":
+            if(val.toUpperCase() === "NONE@NONE.COM") return "";
             return val;
         case "object":
             return val.name;
+        case "undefined":
+            return "";
     }
 }
 
