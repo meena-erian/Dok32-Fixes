@@ -179,7 +179,7 @@ function runReport(){
                     console.log(CSVstr);
                     let dc = Object.keys(window.duplicateCharts);
                     if(dc.length){
-                        toast("Warning!", `Duplicate records were found for chart number[s]: <br />${dc.join(",")}`);
+                        toast("Warning!", `Duplicate records were found for chart number${dc.length === 1? "" : "s"} : <br />${dc.join(",")}`);
                         window.duplicateCharts = {};
                     }
                     downloadButton.setAttribute("href", 
