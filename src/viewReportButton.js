@@ -181,6 +181,14 @@ function runReport(){
                     if(dc.length){
                         toast("Warning!", `Duplicate records were found for chart number${dc.length === 1? "" : "s"} : <br />${dc.join(",")}`);
                         window.duplicateCharts = {};
+                        var charts = {};
+                        res = res.filter(rec => {
+                            if(!charts[rec.chartNumber]){
+                                charts[rec.chartNumber] = true;
+                                return true;
+                            }
+                            return false;
+                        })
                     }
                     downloadButton.setAttribute("href", 
                     `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
