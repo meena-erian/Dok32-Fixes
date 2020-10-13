@@ -23,13 +23,13 @@ async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
-    if(window.duplicateCharts[`${patient.chartNumber}`]) {
+    if(window.duplicateCharts[`P${patient.chartNumber}`]) {
         toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
         return undefined;
     }
     else{
         console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
-        console.log("window.duplicateChart: ", window.duplicateCharts);
+        console.log("window.duplicateCharts: ", window.duplicateCharts);
     }
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
@@ -48,7 +48,7 @@ async function getPatientByChart(patient){
             Object.assign(patient, results[results.length - 1]);
             toast(`Error!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`);
             console.log("Current window.duplicateCharts: ", window.duplicateCharts);
-            window.duplicateCharts[`${patient.chartNumber}`] = true;
+            window.duplicateCharts[`P${patient.chartNumber}`] = true;
         }
     }
     return patient;
