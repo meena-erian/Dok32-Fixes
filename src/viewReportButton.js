@@ -17,13 +17,13 @@ function PascalCaseToNorml(str){
      //.replace(/^./, function(str){ return str.toUpperCase(); })
 }
 
-window.duplicateCharts = {};
+if(!window.duplicateCharts) window.duplicateCharts = {};
 
 async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
-    if(window.duplicateCharts[patient.chartNumber] !== undefined) {
+    if(window.duplicateCharts[patient.chartNumber]) {
         toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
         return undefined;
     }
@@ -103,7 +103,8 @@ async function mergeWithPatientContactDetails(record){
     if(patientWithKey.patientKey){
         patientWithKey = await getPatientByKey(patientWithKey);
     }
-    toast("Info: ", `Returning undefined at mergeWithPatientContactDetails line 106`, "info");
+    if(patientWithKey === undefined)
+        toast("Info: ", `Returning undefined at mergeWithPatientContactDetails line 107`, "info");
     return patientWithKey;
 }
 
