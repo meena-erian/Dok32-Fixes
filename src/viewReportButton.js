@@ -17,13 +17,13 @@ function PascalCaseToNorml(str){
      //.replace(/^./, function(str){ return str.toUpperCase(); })
 }
 
-var duplicateCharts = {};
+window.duplicateCharts = {};
 
 async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
-    if(duplicateCharts[patient.chartNumber] !== undefined) return undefined;
+    if(window.duplicateCharts[patient.chartNumber] !== undefined) return undefined;
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
         if(results[0].chartNumber === patient.chartNumber){
@@ -40,7 +40,7 @@ async function getPatientByChart(patient){
         else {
             Object.assign(patient, results[results.length - 1]);
             toast(`Error!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`);
-            duplicateCharts[patient.chartNumber] = true;
+            window.duplicateCharts[patient.chartNumber] = true;
         }
     }
     return patient;

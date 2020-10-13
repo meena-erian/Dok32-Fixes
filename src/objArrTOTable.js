@@ -45,7 +45,7 @@ function escapeDataValue(val, key){
                 if(val.length > 7) return val;
                 return  "";
             }
-            if(val.toUpperCase().includes("@NONE.COM")) return "";
+            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM") return "";
             return val;
         case "object":
             return val.name;
