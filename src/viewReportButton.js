@@ -23,7 +23,10 @@ async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
-    if(window.duplicateCharts[patient.chartNumber] !== undefined) return undefined;
+    if(window.duplicateCharts[patient.chartNumber] !== undefined) {
+        toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
+        return undefined;
+    }
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
         if(results[0].chartNumber === patient.chartNumber){
@@ -100,6 +103,7 @@ async function mergeWithPatientContactDetails(record){
     if(patientWithKey.patientKey){
         patientWithKey = await getPatientByKey(patientWithKey);
     }
+    toast("Info: ", `Returning undefined at mergeWithPatientContactDetails line 106`, "info");
     return patientWithKey;
 }
 
