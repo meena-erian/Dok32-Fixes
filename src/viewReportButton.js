@@ -29,7 +29,7 @@ async function getPatientByChart(patient){
     }
     else{
         console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
-        console.log("window.duplicateChart: ", window.duplicateChart);
+        console.log("window.duplicateChart: ", window.duplicateCharts);
     }
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
