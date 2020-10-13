@@ -23,10 +23,12 @@ async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
-    if(window.duplicateCharts[`P${patient.chartNumber}`]) {
+    /*
+    if(window.duplicateCharts[`${patient.chartNumber}`]) {
         toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
         return undefined;
     }
+    */
     else{
         console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
         let newO = {};
@@ -48,9 +50,9 @@ async function getPatientByChart(patient){
         else if(results.length === 0) toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
         else {
             Object.assign(patient, results[results.length - 1]);
-            toast(`Warning!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`, "warning");
-            console.log("Current window.duplicateCharts: ", window.duplicateCharts);
-            window.duplicateCharts[`P${patient.chartNumber}`] = true;
+            //toast(`Warning!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`, "warning");
+            //console.log("Current window.duplicateCharts: ", window.duplicateCharts);
+            window.duplicateCharts[`${patient.chartNumber}`] = true;
         }
     }
     return patient;
@@ -175,7 +177,11 @@ function runReport(){
                     tableResults.append(objArrTOTable(res));
                     var CSVstr = objArrTOCSV(res);
                     console.log(CSVstr);
-
+                    let dc = Object.keys(window.duplicateCharts);
+                    if(dc.length){
+                        toast("Warning!", `Duplicate records were found for chart number${dc.length === 1? "" : "s"} : <br />${dc.join(",")}`);
+                        window.duplicateCharts = {};
+                    }
                     downloadButton.setAttribute("href", 
                     `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
                 }
