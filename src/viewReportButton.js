@@ -27,6 +27,10 @@ async function getPatientByChart(patient){
         toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
         return undefined;
     }
+    else{
+        console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
+        console.log("window.duplicateChart: ", window.duplicateChart);
+    }
     var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
     if(results.length === 1){
         if(results[0].chartNumber === patient.chartNumber){
