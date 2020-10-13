@@ -38,7 +38,7 @@ function escapeCSVValue(val){
             }
             return val.toString();
         case "string":
-            if(val.toUpperCase() === "NONE@NONE.COM") return "";
+            if(val.toUpperCase().includes("@NONE.COM")) return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
