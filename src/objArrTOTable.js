@@ -23,7 +23,7 @@ function getObjArrTableHeader(objArr){
         Object.assign(merge, element);
     });
     //Remove field "hidden"
-    if(merge.hidden) delete merge.hidden;
+    delete merge.hidden;
     return Object.keys(merge);
 }
 
