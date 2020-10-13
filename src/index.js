@@ -4,7 +4,7 @@ export default function(){
     if (hn === 'everlast-office.dok32.com' || true) {
 
         //Import Moment.js
-        s = document.createElement("script");
+        let s = document.createElement("script");
         s.src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js";
         document.body.append(s);
 
