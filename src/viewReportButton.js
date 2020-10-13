@@ -23,10 +23,12 @@ async function getPatientByChart(patient){
     if(!patient.chartNumber){
         toast("Error!", "Chart number not set!");
     }
+    /*
     if(window.duplicateCharts[`P${patient.chartNumber}`]) {
         toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
         return undefined;
     }
+    */
     else{
         console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
         let newO = {};
