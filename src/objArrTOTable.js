@@ -22,6 +22,8 @@ function getObjArrTableHeader(objArr){
     objArr.forEach(element => {
         Object.assign(merge, element);
     });
+    //Remove field "hidden"
+    delete merge.hidden;
     return Object.keys(merge);
 }
 
@@ -29,7 +31,7 @@ function getObjArrTableHeader(objArr){
  * 
  * @param {any} val 
  */
-function escapeDateValue(val){
+function escapeDataValue(val, key){
     switch(typeof val){
         case "number":
             if(val > 80000000000 && val < 1999999999999){
@@ -38,9 +40,17 @@ function escapeDateValue(val){
             }
             return val.toString();
         case "string":
+            if(key.toUpperCase().includes("PHONENUMBER")){
+                val = val.match(/[0-9\+]+/g).join("");
+                if(val.length > 7) return val;
+                return  "";
+            }
+            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM") return "";
             return val;
         case "object":
             return val.name;
+        case "undefined":
+            return "";
     }
 }
 
@@ -70,7 +80,7 @@ function objArrTOTable(objArr){
         tableBody.append(tr);
         header.forEach((key) => {
             var td = document.createElement("td");
-            td.innerText = escapeDateValue(row[key]);
+            td.innerText = escapeDataValue(row[key], key);
             tr.append(td);
         });
     });

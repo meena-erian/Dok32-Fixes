@@ -3,6 +3,7 @@ import {fetchList} from "./fetchList.js";
 import {objArrTOCSV} from "./objArrTOCSV.js";
 import {objArrTOTable} from "./objArrTOTable.js";
 import {findInAngularApp} from "./findInAngularApp.js";
+import {toast} from "./toast.js";
 
 /**
  * 
@@ -16,12 +17,109 @@ function PascalCaseToNorml(str){
      //.replace(/^./, function(str){ return str.toUpperCase(); })
 }
 
+if(!window.duplicateCharts) window.duplicateCharts = {};
 
+async function getPatientByChart(patient){
+    if(!patient.chartNumber){
+        toast("Error!", "Chart number not set!");
+    }
+    if(window.duplicateCharts[`P${patient.chartNumber}`]) {
+        toast("Info: ", `Removing duplicate of #${patient.chartNumber}`, "info");
+        return undefined;
+    }
+    else{
+        console.log(`No duplicates found for Patient Chart Number ${patient.chartNumber}`);
+        let newO = {};
+        Object.assign(newO, window.duplicateCharts);
+        console.log("window.duplicateCharts: ", newO);
+    }
+    var results = await fetchList(`patient/list.json`, {chartNumber: patient.chartNumber}, true, 10);
+    if(results.length === 1){
+        if(results[0].chartNumber === patient.chartNumber){
+            Object.assign(patient, results[0]);
+        }
+        else{
+            toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
+        }
+    }
+    else{
+        results = results.filter(p => p.chartNumber === patient.chartNumber);
+        if(results.length === 1) Object.assign(patient, results[0]);
+        else if(results.length === 0) toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
+        else {
+            Object.assign(patient, results[results.length - 1]);
+            toast(`Warning!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`, "warning");
+            console.log("Current window.duplicateCharts: ", window.duplicateCharts);
+            window.duplicateCharts[`P${patient.chartNumber}`] = true;
+        }
+    }
+    return patient;
+}
+
+
+
+async function getPatientByKey(patient){
+    if(patient === undefined) return undefined;
+    if(!patient.patientKey){
+        console.warn("Dok32 Fixes- getPatientByKey: Error! patient key not set!");
+    } 
+    var results = await fetchList(`report/patient/list.json`, {patientKeys: patient.patientKey, reportName:"PATIENT_CONTACT_DETAILS_REPORT"}, true, 10);
+    if(results.length === 1){
+        Object.assign(patient, results[0]);
+    }
+    else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByKey: Error! No patient found with Patient Key: ${patient.patientKey}`);
+    else {
+        Object.assign(patient, results[results.length - 1]);
+        toast(`Warning!`, `Multiple patients found with the Patient Key ${patient.patientKey}. \nThe last one was used`);
+    }
+    return patient;
+}
+
+
+/**
+ * Function that takes an array of objects containing the chartNumber
+ *   and assignes to each the patient's contact details.
+ * 
+ * @note: recordArr allows a maximum size of 10 records
+ * 
+ * @param {object[]} recordArr DB records containing the chartNumber prop
+ * @returns {object[]} DB records after adding contact details to each
+ */
+/*
+async function mergeWithPatientContactDetails(recordArr){
+    recordArr.forEach((patient, index) => {
+        var patientWithKey = await getPatientByChart(patient);
+        if(patientWithKey.patientKey){
+            patientWithKey = await getPatientByKey(patientWithKey);
+        }
+        recordArr[index] = patientWithKey;
+    });
+    return recordArr;
+}*/
+
+
+/**
+ * Function that takes a an object containing the chartNumber of a patient 
+ *   and assignes to it the patient's contact details.
+ * @param {object} record DB record containing the chartNumber prop
+ * @returns {object} The DB record after adding to it its contact details
+ */
+
+async function mergeWithPatientContactDetails(record){
+    var patientWithKey = await getPatientByChart(record);
+    if(patientWithKey.patientKey){
+        patientWithKey = await getPatientByKey(patientWithKey);
+    }
+    if(patientWithKey === undefined)
+        toast("Info: ", `Returning undefined at mergeWithPatientContactDetails line 107`, "info");
+    return patientWithKey;
+}
 
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
-        limit: 100
+        limit: 100,
+        mergeFunc: mergeWithPatientContactDetails
     },
     PatientsBirthday : {
         api: "report/patient/list.json",
@@ -62,16 +160,17 @@ function runReport(){
 
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
-        alert("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena");
+        toast("", "Sorry for inconvenience! This button is not yet compatible with this report.(<br /><br /> Kind regards,<br /> Meena", "info");
     }
     else {
         window.$("#reportModal").modal();
-        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter")
+        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc)
             .then(res => {
                 console.log(res);
                 if(res.length){
                     downloadButton.removeAttribute("disabled");
-                    downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - on ${new Date().toDateString()}.csv`);
+                    let date = new Date();
+                    downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - ${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.csv`);
                     progressLabel.innerText = "Report Completed";
                     tableResults.append(objArrTOTable(res));
                     var CSVstr = objArrTOCSV(res);

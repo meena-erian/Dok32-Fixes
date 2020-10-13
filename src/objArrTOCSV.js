@@ -22,6 +22,8 @@ function getJSONTableHeader(objArr){
     objArr.forEach(element => {
         Object.assign(merge, element);
     });
+    //Remove field "hidden"
+    delete merge.hidden;
     return Object.keys(merge);
 }
 
@@ -29,7 +31,7 @@ function getJSONTableHeader(objArr){
  * 
  * @param {any} val 
  */
-function escapeCSVValue(val){
+function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
             if(val > 80000000000 && val < 1999999999999){
@@ -38,10 +40,18 @@ function escapeCSVValue(val){
             }
             return val.toString();
         case "string":
+            if(key.toUpperCase().includes("PHONENUMBER")){
+                val = val.match(/[0-9\+]+/g).join("");
+                if(val.length > 7) return val;
+                return  "";
+            }
+            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM") return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
             else return val.name;
+        case "undefined":
+            return "";
     }
 }
 
@@ -61,7 +71,7 @@ function objArrTOCSV(objArr){
         CSVstr += "\n";
         header.forEach((key, index) => {
             if(index !== 0) CSVstr += ",";
-            CSVstr += escapeCSVValue(row[key]);
+            CSVstr += escapeCSVValue(row[key], key);
         });
     });
     return CSVstr;
