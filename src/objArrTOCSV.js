@@ -40,7 +40,7 @@ function escapeCSVValue(val, key){
             }
             return val.toString();
         case "string":
-            if(key.toUpperCase().includes("PHONENUMBER")){
+            if(typeof key === "string" && key.toUpperCase().includes("PHONENUMBER")){
                 val = val.match(/[0-9\+]+/g).join("");
                 if(val.length > 7) return val;
                 return  "";
