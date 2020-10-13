@@ -174,14 +174,22 @@ function runReport(){
                     let date = new Date();
                     downloadButton.setAttribute("download", `${PascalCaseToNorml(reportHash)} Report - ${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.csv`);
                     progressLabel.innerText = "Report Completed";
-                    tableResults.append(objArrTOTable(res));
-                    var CSVstr = objArrTOCSV(res);
-                    console.log(CSVstr);
                     let dc = Object.keys(window.duplicateCharts);
                     if(dc.length){
-                        toast("Warning!", `Duplicate records were found for chart number${dc.length === 1? "" : "s"} : <br />${dc.join(",")}`);
+                        toast("Warning!", `Duplicate records were found for chart number${dc.length === 1? "" : "s"} : <br />${dc.join(",")}<br/> All duplicates are automaticcally removed.`);
                         window.duplicateCharts = {};
+                        var charts = {};
+                        res = res.filter(rec => {
+                            if(!charts[rec.chartNumber]){
+                                charts[rec.chartNumber] = true;
+                                return true;
+                            }
+                            console.log(`RecordNumber: ${rec.chartNumber} was filtered successsfully`);
+                            return false;
+                        })
                     }
+                    tableResults.append(objArrTOTable(res));
+                    var CSVstr = objArrTOCSV(res);
                     downloadButton.setAttribute("href", 
                     `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
                 }

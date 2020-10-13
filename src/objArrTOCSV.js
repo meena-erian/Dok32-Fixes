@@ -34,18 +34,18 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
-            if(val > 80000000000 && val < 1999999999999){
+            if(Math.abs(val) > 80000000000 && Math.abs(val) < 1999999999999){
                 let date = new Date(val);
                 return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
             }
             return val.toString();
         case "string":
             if(typeof key === "string" && key.toUpperCase().includes("PHONENUMBER")){
-                val = val.match(/[0-9\+]+/g).join("");
-                if(val.length > 7) return `"${val}"`;
+                val = val.match(/[0-9\+\(\)\-]+/g).join("");
+                if(val.length > 7) return `${val}`;
                 return  "";
             }
-            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM") return "";
+            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM"  || val.toUpperCase() === "NONE.NONE@GMAIL.COM") return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
