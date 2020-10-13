@@ -187,6 +187,7 @@ function runReport(){
                                 charts[rec.chartNumber] = true;
                                 return true;
                             }
+                            console.log(`RecordNumber: ${rec.chartNumber} was filtered successsfully`);
                             return false;
                         })
                     }
