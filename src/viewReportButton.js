@@ -3,6 +3,7 @@ import {fetchList} from "./fetchList.js";
 import {objArrTOCSV} from "./objArrTOCSV.js";
 import {objArrTOTable} from "./objArrTOTable.js";
 import {findInAngularApp} from "./findInAngularApp.js";
+import {toast} from "./toast.js";
 
 /**
  * 
@@ -36,11 +37,13 @@ async function getPatientByChart(patient){
         else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByChart: Error! No patient found with chart number ${patient.chartNumber}`);
         else {
             Object.assign(patient, results[results.length - 1]);
-            alert(`Error! ${results.length} patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
+            toast(`Error!`, `${results.length} patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
         }
     }
     return patient;
 }
+
+
 
 async function getPatientByKey(patient){
     if(!patient.patientKey){
@@ -53,7 +56,7 @@ async function getPatientByKey(patient){
     else if(results.length === 0) console.warn(`Dok32 Fixes- getPatientByKey: Error! No patient found with Patient Key: ${patient.patientKey}`);
     else {
         Object.assign(patient, results[results.length - 1]);
-        alert(`Error! Multiple patients found with the Patient Key ${patient.patientKey}. \nThe last one was used`);
+        toast(`Warning!`, `Multiple patients found with the Patient Key ${patient.patientKey}. \nThe last one was used`);
     }
     return patient;
 }
@@ -141,7 +144,7 @@ function runReport(){
 
     let reportP = reportsParams[reportHash];
     if(reportP === undefined ){
-        alert("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena");
+        toast("Sorry for inconvenience! This button is not yet compatible with this report :(\n\nKind regards,\nMeena", "info");
     }
     else {
         window.$("#reportModal").modal();
