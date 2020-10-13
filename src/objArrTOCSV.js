@@ -34,9 +34,11 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
-            if(Math.abs(val) > 80000000000 && Math.abs(val) < 1999999999999){
-                let date = new Date(val);
-                return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+            if(typeof key === "string" && key.toUpperCase().includes("DATE")){
+                //let date = new Date(val);
+                console.log("escapeCSVValueTest:", window, moment);
+                return moment.unix(val).tz('GST').format('DD/MM/YYYY');
+                //return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
             }
             return val.toString();
         case "string":
