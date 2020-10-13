@@ -43,6 +43,7 @@ async function getPatientByChart(patient){
         else {
             Object.assign(patient, results[results.length - 1]);
             toast(`Error!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`);
+            console.log("Current window.duplicateCharts: ", window.duplicateCharts);
             window.duplicateCharts[patient.chartNumber] = true;
         }
     }
