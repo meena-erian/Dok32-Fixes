@@ -39,7 +39,7 @@ async function getPatientByChart(patient){
         else if(results.length === 0) toast(`Error!`, `No patient found with chart number ${patient.chartNumber}`);
         else {
             Object.assign(patient, results[results.length - 1]);
-            toast(`Error!`, `${results.length} patients found with the same chart number ${patient.chartNumber}. \nThe last one was used`);
+            toast(`Error!`, `${results.length} duplicate records found for the chart number ${patient.chartNumber}. <br />The last one was used`);
             duplicateCharts[patient.chartNumber] = true;
         }
     }
