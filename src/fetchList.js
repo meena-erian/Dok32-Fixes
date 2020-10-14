@@ -6,14 +6,15 @@ function setProgressRatio(loaded, total, progressbarID, counterID){
         progressElement.style.width = `${100}%`;
         progressElement.setAttribute("aria-valuenow", `${100}`);
         counterElement.innerText = `0/0 (Nothing matches search criteria)`;
-        break;
+        return false;
     }
     else{
         progressElement.style.width = `${completionRatio}%`;
         progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
         counterElement.innerText = `${loaded}/${total}`;
     }
-    if(list.length === totalCount) break;
+    if(list.length === totalCount) return false;
+    return true;
 }
 
 /**
@@ -62,7 +63,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         
         let totalCount = response.data.totalCount;
         if(totalCount !== undefined && progressbarID) {
-            setProgressRatio(list.length, totalCount, progressbarID, counterID)
+            if(!setProgressRatio(list.length, totalCount, progressbarID, counterID)) break;
         }
         if(!response.data) {
             console.log("Error! Server response: ", response);
