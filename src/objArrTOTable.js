@@ -3,12 +3,12 @@ function validEmail(email){
     if(email.includes("@NONE.COM")) return false;
     if(email.includes("@NON.COM")) return false;
     let id = email.split("@")[0];
-    let host = id.split("@"[1]);
+    let host = id.split("@")[1];
     if(host === "GMAIL.COM" && id.length < 7) return false;
     let sections = id.split(".");
     for(let i=0 ; i< sections.length; i++){
         if(!sections[i].length) return false;
-        if(sections[i] === "NONE" || sections[i] === "NON") return false;
+        if(sections[i] === "NONE" || sections[i] === "NON" || sections[i] === "EMAIL") return false;
     }
     return true;
 }
