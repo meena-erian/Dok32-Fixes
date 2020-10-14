@@ -46,6 +46,7 @@ function getObjArrTableHeader(objArr){
     delete merge.patientKey;
     delete merge.appStatus;
     delete merge.appUsername;
+    delete merge.duration;
     return Object.keys(merge);
 }
 
@@ -56,7 +57,9 @@ function getObjArrTableHeader(objArr){
 function escapeDataValue(val, key){
     switch(typeof val){
         case "number":
-            if(typeof key === "string" && key.toUpperCase().includes("DATE")){
+            if(typeof key === "string" && 
+                (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
+                ){
                 return moment(val).format("DD/MM/YYYY");
             }
             return val.toString();
