@@ -1,5 +1,5 @@
 function validEmail(email){
-    let email = email.toUpperCase();
+    email = email.toUpperCase();
     if(email.includes("@NONE.COM")) return false;
     if(email.includes("@NON.COM")) return false;
     let id = email.split("@")[0];
