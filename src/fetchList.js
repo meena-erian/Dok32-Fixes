@@ -13,7 +13,7 @@ function setProgressRatio(loaded, total, progressbarID, counterID){
         progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
         counterElement.innerText = `${loaded}/${total}`;
     }
-    if(list.length === totalCount) return false;
+    if(loaded === total) return false;
     return true;
 }
 
