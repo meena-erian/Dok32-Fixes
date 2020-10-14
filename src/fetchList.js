@@ -1,3 +1,21 @@
+function setProgressRatio(loaded, total, progressbarID, counterID){
+    let completionRatio = Math.round(loaded / total * 100);
+    let progressElement = document.getElementById(progressbarID);
+    let counterElement = document.getElementById(counterID);
+    if(typeof completionRatio !== 'number' || completionRatio === NaN || completionRatio === Infinity){
+        progressElement.style.width = `${100}%`;
+        progressElement.setAttribute("aria-valuenow", `${100}`);
+        counterElement.innerText = `0/0 (Nothing matches search criteria)`;
+        break;
+    }
+    else{
+        progressElement.style.width = `${completionRatio}%`;
+        progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
+        counterElement.innerText = `${loaded}/${total}`;
+    }
+    if(list.length === totalCount) break;
+}
+
 /**
  * A function that returns a parsed list of records from a specific server endpoint
  * 
@@ -28,7 +46,12 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             return false;
         }
         if(typeof mergeFunc === "function"){
-            let results = await Promise.all(response.data.list.map(async p => await mergeFunc(p)));
+            var subprogress = 0;
+            let results = await Promise.all(response.data.list.map(async p => {
+                r = await mergeFunc(p);
+                subprogress ++;
+                setProgressRatio(list.length + subprogress, totalCount, progressbarID, counterID);
+            }));
             results.filter(r => r !== undefined);
             //console.log(results);
             list = list.concat(results);
@@ -39,22 +62,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         
         let totalCount = response.data.totalCount;
         if(totalCount !== undefined && progressbarID) {
-            let completionRatio = Math.round(list.length / totalCount * 100);
-            let progressElement = document.getElementById(progressbarID);
-            let counterElement = document.getElementById(counterID);
-            console.log(completionRatio);
-            if(typeof completionRatio !== 'number' || completionRatio === NaN || completionRatio === Infinity){
-                progressElement.style.width = `${100}%`;
-                progressElement.setAttribute("aria-valuenow", `${100}`);
-                counterElement.innerText = `0/0 (Nothing matches search criteria)`;
-                break;
-            }
-            else{
-                progressElement.style.width = `${completionRatio}%`;
-                progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
-                counterElement.innerText = `${list.length}/${totalCount}`;
-            }
-            if(list.length === totalCount) break;
+            setProgressRatio(list.length, totalCount, progressbarID, counterID)
         }
         if(!response.data) {
             console.log("Error! Server response: ", response);
