@@ -126,7 +126,7 @@ const reportsParams = {
     PatientsBirthday : {
         api: "report/patient/list.json",
         limit: 100,
-        //additionalParams : {reportName : "PATIENTS_BIRTHDAY_REPORT"}
+        mergeFunc: mergeWithPatientContactDetails
     },
     PatientContactDetails : {
         api: "report/patient/list.json",
