@@ -53,6 +53,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
                 let r = await mergeFunc(p);
                 subprogress += 1;
                 setProgressRatio(list.length + subprogress, totalCount, progressbarID, counterID);
+                return r;
             }));
             results.filter(r => r !== undefined);
             //console.log(results);
