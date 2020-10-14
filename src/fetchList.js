@@ -46,6 +46,7 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             console.log(response);
             return false;
         }
+        let totalCount = response.data.totalCount;
         if(typeof mergeFunc === "function"){
             var subprogress = 0;
             let results = await Promise.all(response.data.list.map(async p => {
@@ -60,8 +61,6 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         else{
             list = list.concat(response.data.list);
         }
-        
-        let totalCount = response.data.totalCount;
         if(totalCount !== undefined && progressbarID) {
             if(!setProgressRatio(list.length, totalCount, progressbarID, counterID)) break;
         }
