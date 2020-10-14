@@ -22,12 +22,13 @@ function getJSONTableHeader(objArr){
     objArr.forEach(element => {
         Object.assign(merge, element);
     });
-    //Remove field "hidden"
+    //Remove needless fields
     delete merge.hidden;
     delete merge.clinic;
-    delete merge.clinic;
+    delete merge.id;
     delete merge.createdDate;
     delete merge.companyPatientId;
+    delete merge.patientKey;
     return Object.keys(merge);
 }
 
