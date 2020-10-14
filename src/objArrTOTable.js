@@ -34,10 +34,7 @@ function getObjArrTableHeader(objArr){
 function escapeDataValue(val, key){
     switch(typeof val){
         case "number":
-            //if(Math.abs(val) > 80000000000 && Math.abs(val) < 1999999999999){
             if(typeof key === "string" && key.toUpperCase().includes("DATE")){
-                //let date = new Date(val);
-                //return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
                 return moment(val).format("DD/MM/YYYY");
             }
             return val.toString();
