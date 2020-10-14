@@ -36,8 +36,8 @@ function escapeCSVValue(val, key){
         case "number":
             if(typeof key === "string" && key.toUpperCase().includes("DATE")){
                 //let date = new Date(val);
-                console.log("escapeCSVValueTest:", window, moment);
-                return moment.unix(val).tz('GST').format('DD/MM/YYYY');
+                //console.log("escapeCSVValueTest:", window, moment);
+                return moment(val).format("DD/MM/YYYY");
                 //return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
             }
             return val.toString();
