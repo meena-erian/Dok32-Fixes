@@ -1,3 +1,18 @@
+function validEmail(email){
+    let email = email.toUpperCase();
+    if(email.includes("@NONE.COM")) return false;
+    if(email.includes("@NON.COM")) return false;
+    let id = email.split("@")[0];
+    let host = id.split("@"[1]);
+    if(host === "GMAIL.COM" && id.length < 7) return false;
+    let sections = id.split(".");
+    for(let i=0 ; i< sections.length; i++){
+        if(!sections[i].length) return false;
+        if(sections[i] === "NONE" || sections[i] === "NON") return false;
+    }
+    return true;
+}
+
 /**
  * 
  * @param {string} str 
@@ -29,6 +44,8 @@ function getJSONTableHeader(objArr){
     delete merge.createdDate;
     delete merge.companyPatientId;
     delete merge.patientKey;
+    delete merge.appStatus;
+    delete merge.appUsername;
     return Object.keys(merge);
 }
 
@@ -49,7 +66,7 @@ function escapeCSVValue(val, key){
                 if(val.length === 15) return `${val}`;
                 return  "";
             }
-            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM"  || val.toUpperCase() === "NONE.NONE@GMAIL.COM") return "";
+            if(typeof key === "string" && key.toUpperCase().includes("EMAIL") && !validEmail(val)) return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
