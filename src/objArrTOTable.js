@@ -1,3 +1,18 @@
+function validEmail(email){
+    email = email.toUpperCase();
+    if(email.includes("@NONE.COM")) return false;
+    if(email.includes("@NON.COM")) return false;
+    let id = email.split("@")[0];
+    let host = id.split("@")[1];
+    if(host === "GMAIL.COM" && id.length < 7) return false;
+    let sections = id.split(".");
+    for(let i=0 ; i< sections.length; i++){
+        if(!sections[i].length) return false;
+        if(sections[i] === "NONE" || sections[i] === "NON" || sections[i] === "EMAIL") return false;
+    }
+    return true;
+}
+
 /**
  * 
  * @param {string} str 
@@ -29,6 +44,8 @@ function getObjArrTableHeader(objArr){
     delete merge.createdDate;
     delete merge.companyPatientId;
     delete merge.patientKey;
+    delete merge.appStatus;
+    delete merge.appUsername;
     return Object.keys(merge);
 }
 
@@ -46,10 +63,10 @@ function escapeDataValue(val, key){
         case "string":
             if(key.toUpperCase().includes("PHONENUMBER")){
                 val = val.match(/[0-9\+]+/g).join("");
-                if(val.length === 13) return val;
+                if(val.length === 13 || val.length === 14) return val;
                 return  "";
             }
-            if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM" || val.toUpperCase() === "NONE.NONE@GMAIL.COM") return "";
+            if(typeof key === "string" && key.toUpperCase().includes("EMAIL") && !validEmail(val)) return "";
             return val;
         case "object":
             return val.name;
