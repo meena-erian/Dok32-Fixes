@@ -1,3 +1,22 @@
+function setProgressRatio(loaded, total, progressbarID, counterID){
+    let completionRatio = Math.round(loaded / total * 100);
+    let progressElement = document.getElementById(progressbarID);
+    let counterElement = document.getElementById(counterID);
+    if(typeof completionRatio !== 'number' || completionRatio === NaN || completionRatio === Infinity){
+        progressElement.style.width = `${100}%`;
+        progressElement.setAttribute("aria-valuenow", `${100}`);
+        counterElement.innerText = `0/0 (Nothing matches search criteria)`;
+        return false;
+    }
+    else{
+        progressElement.style.width = `${completionRatio}%`;
+        progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
+        counterElement.innerText = `${loaded}/${total}`;
+    }
+    if(loaded === total) return false;
+    return true;
+}
+
 /**
  * A function that returns a parsed list of records from a specific server endpoint
  * 
@@ -27,8 +46,15 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             console.log(response);
             return false;
         }
+        let totalCount = response.data.totalCount;
         if(typeof mergeFunc === "function"){
-            let results = await Promise.all(response.data.list.map(async p => await mergeFunc(p)));
+            var subprogress = 0;
+            let results = await Promise.all(response.data.list.map(async p => {
+                let r = await mergeFunc(p);
+                subprogress += 1;
+                setProgressRatio(list.length + subprogress, totalCount, progressbarID, counterID);
+                return r;
+            }));
             results.filter(r => r !== undefined);
             //console.log(results);
             list = list.concat(results);
@@ -36,25 +62,8 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         else{
             list = list.concat(response.data.list);
         }
-        
-        let totalCount = response.data.totalCount;
         if(totalCount !== undefined && progressbarID) {
-            let completionRatio = Math.round(list.length / totalCount * 100);
-            let progressElement = document.getElementById(progressbarID);
-            let counterElement = document.getElementById(counterID);
-            console.log(completionRatio);
-            if(typeof completionRatio !== 'number' || completionRatio === NaN || completionRatio === Infinity){
-                progressElement.style.width = `${100}%`;
-                progressElement.setAttribute("aria-valuenow", `${100}`);
-                counterElement.innerText = `0/0 (Nothing matches search criteria)`;
-                break;
-            }
-            else{
-                progressElement.style.width = `${completionRatio}%`;
-                progressElement.setAttribute("aria-valuenow", `${completionRatio}`);
-                counterElement.innerText = `${list.length}/${totalCount}`;
-            }
-            if(list.length === totalCount) break;
+            if(!setProgressRatio(list.length, totalCount, progressbarID, counterID)) break;
         }
         if(!response.data) {
             console.log("Error! Server response: ", response);

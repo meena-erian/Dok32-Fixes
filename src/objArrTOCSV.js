@@ -22,8 +22,13 @@ function getJSONTableHeader(objArr){
     objArr.forEach(element => {
         Object.assign(merge, element);
     });
-    //Remove field "hidden"
+    //Remove needless fields
     delete merge.hidden;
+    delete merge.clinic;
+    delete merge.id;
+    delete merge.createdDate;
+    delete merge.companyPatientId;
+    delete merge.patientKey;
     return Object.keys(merge);
 }
 
@@ -34,15 +39,14 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
-            if(Math.abs(val) > 80000000000 && Math.abs(val) < 1999999999999){
-                let date = new Date(val);
-                return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`
+            if(typeof key === "string" && key.toUpperCase().includes("DATE")){
+                return moment(val).format("DD/MM/YYYY");
             }
             return val.toString();
         case "string":
             if(typeof key === "string" && key.toUpperCase().includes("PHONENUMBER")){
                 val = val.match(/[0-9\+\(\)\-]+/g).join("");
-                if(val.length > 7) return `${val}`;
+                if(val.length === 15) return `${val}`;
                 return  "";
             }
             if(val.toUpperCase().includes("@NONE.COM") || val.toUpperCase() === "NONE@GMAIL.COM"  || val.toUpperCase() === "NONE.NONE@GMAIL.COM") return "";
