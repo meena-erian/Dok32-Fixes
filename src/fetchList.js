@@ -49,8 +49,8 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         if(typeof mergeFunc === "function"){
             var subprogress = 0;
             let results = await Promise.all(response.data.list.map(async p => {
-                r = await mergeFunc(p);
-                subprogress ++;
+                let r = await mergeFunc(p);
+                subprogress += 1;
                 setProgressRatio(list.length + subprogress, totalCount, progressbarID, counterID);
             }));
             results.filter(r => r !== undefined);
