@@ -24,6 +24,10 @@ function getJSONTableHeader(objArr){
     });
     //Remove field "hidden"
     delete merge.hidden;
+    delete merge.clinic;
+    delete merge.clinic;
+    delete merge.createdDate;
+    delete merge.companyPatientId;
     return Object.keys(merge);
 }
 
