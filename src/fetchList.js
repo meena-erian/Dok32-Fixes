@@ -3,6 +3,12 @@ var renameMap = {
     "gender_name" : "gender",
     "nationality_name" : "nationality",
     "clinic_name" : "clinic",
+    "status_name" : "status",
+    "formattedTime" : "time",
+    "category_name" : "type",
+    "patient_documentPasswordNumber" : "patient_passport",
+    "patient_documentNationalIdNumber" : "patient_NationalIdNumber",
+    "patient_documentDriverLicenseNumber" : "patient_DriverLicenseNumber"
 }
 
 function renameFields(obj){
@@ -61,7 +67,7 @@ function setProgressRatio(loaded, total, progressbarID, counterID){
  * 
  * @return {object[] | false} Returns the list or false on failure.
  */
-async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID, mergeFunc){
+async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID, mergeFunc, customStructure){
     var start = 0;
     let queryString = "";
     for (var key in params) {

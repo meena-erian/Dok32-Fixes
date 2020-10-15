@@ -54,14 +54,14 @@ function getJSONTableHeader(objArr){
     delete merge.nationality_id;
     delete merge.status_id;
     delete merge.id;
-    delete merge.createdDate;
+    //delete merge.createdDate;
     delete merge.companyPatientId;
     delete merge.patientKey;
     delete merge.patient_patientKey;
     delete merge.patient_companyPatientId;
     delete merge.appStatus;
     delete merge.appUsername;
-    delete merge.duration;
+    //delete merge.duration;
     return Object.keys(merge);
 }
 

@@ -139,7 +139,8 @@ const reportsParams = {
     AppointmentDetailsList : {
         api: "report/appointment/list.json",
         limit: 100,
-        paramsProps: ["searchParams"]
+        paramsProps: ["searchParams"],
+        customStructure: ["createdDate", "formattedTime", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_documentPasswordNumber", "patient_documentNationalIdNumber", "patient_documentDriverLicenseNumber", "patient_email", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status_name", "category_name", "dentist_name", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     }
 }
@@ -184,7 +185,7 @@ function runReport(){
     }
     else {
         window.$("#reportModal").modal();
-        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc)
+        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc, reportP.customStructure)
             .then(res => {
                 console.log(res);
                 if(res.length){
