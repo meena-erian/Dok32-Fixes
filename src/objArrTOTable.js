@@ -87,6 +87,12 @@ function escapeDataValue(val, key){
             if(typeof key === "string" && key.toUpperCase().includes("EMAIL") && !validEmail(val)) return "";
             return val;
         case "object":
+            if(typeof key === "string"){
+                switch(key){
+                    case "state":
+                        return val.state.name;
+                }
+            }
             return val.name;
         case "undefined":
             return "";

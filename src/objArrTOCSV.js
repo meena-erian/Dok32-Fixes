@@ -87,6 +87,12 @@ function escapeCSVValue(val, key){
             if(typeof key === "string" && key.toUpperCase().includes("EMAIL") && !validEmail(val)) return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
+            if(typeof key === "string"){
+                switch(key){
+                    case "state":
+                        return `"${val.state.name.replace(/"/g, `""`)}"`;
+                }
+            }
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
             else return val.name;
         case "undefined":
