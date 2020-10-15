@@ -1,3 +1,21 @@
+
+var renameMap = {
+    "gender_name" : "gender",
+    "nationality_name" : "nationality",
+    "clinic_name" : "clinic",
+}
+
+function renameFields(obj){
+    let renameKeys = Object.keys(renameMap);
+    renameKeys.forEach(key => {
+        if(obj.hasOwnProperty(key)){
+            obj[renameMap[key]] = obj[key];
+            delete obj[key];
+        }
+    });
+    return obj;
+}
+
 function flattenObject(obj){
     let keys = Object.keys(obj);
     keys.forEach(key => {
@@ -11,7 +29,7 @@ function flattenObject(obj){
             });
         }
     });
-    return obj;
+    return renameFields(obj);
 }
 
 function setProgressRatio(loaded, total, progressbarID, counterID){
@@ -76,7 +94,8 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             list = list.concat(results.map(flattenObject));
         }
         else{
-            list = list.concat(response.data.list.map(flattenObject));
+            if(response.data.list)
+                list = list.concat(response.data.list.map(flattenObject));
         }
         if(totalCount !== undefined && progressbarID) {
             if(!setProgressRatio(list.length, totalCount, progressbarID, counterID)) break;
