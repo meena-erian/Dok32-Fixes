@@ -121,21 +121,25 @@ const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
         limit: 100,
-        mergeFunc: mergeWithPatientContactDetails
+        mergeFunc: mergeWithPatientContactDetails,
+        paramsProps: ["searchParams"]
     },
     PatientsBirthday : {
         api: "report/patient/list.json",
         limit: 100,
-        mergeFunc: mergeWithPatientContactDetails
+        mergeFunc: mergeWithPatientContactDetails,
+        paramsProps: ["searchParams", "dateParams"]
     },
     PatientContactDetails : {
         api: "report/patient/list.json",
         limit: 25,
+        paramsProps: ["searchParams"]
         //additionalParams : {reportName : "PATIENT_CONTACT_DETAILS_REPORT"}
     },
     AppointmentDetailsList : {
         api: "report/appointment/list.json",
         limit: 100,
+        paramsProps: ["searchParams"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     }
 }
@@ -156,11 +160,25 @@ function runReport(){
     progressLabel.innerText = "Loading...";
     tableResults.innerHTML = "";
     var params = {};
-    Object.assign(params, findInAngularApp("searchParams"));
+    let reportP = reportsParams[reportHash];
+    reportP.paramsProps.forEach(source => {
+        if(source === "dateParams"){
+            let data = findInAngularApp(source);
+            let keys = Object.keys(data);
+            keys.forEach(key => {
+                data[key] = new Date(data[key]).getTime();
+            });
+            Object.assign(params, data);
+        }
+        else{
+            Object.assign(params, findInAngularApp(source));
+        }
+    });
+    
     if(params.start !== undefined) delete params.start;
     if(params.limit !== undefined) delete params.limit;
 
-    let reportP = reportsParams[reportHash];
+    
     if(reportP === undefined ){
         toast("", "Sorry for inconvenience! This button is not yet compatible with this report.(<br /><br /> Kind regards,<br /> Meena", "info");
     }

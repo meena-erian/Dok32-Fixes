@@ -40,12 +40,28 @@ function getJSONTableHeader(objArr){
     //Remove needless fields
     delete merge.hidden;
     delete merge.clinic;
+    delete merge.clinic_id;
+    //delete merge.category_name;
+    delete merge.category_id;
+    delete merge.dentalPoint_code;
+    delete merge.dentalPoint_id;
+    delete merge.dentalPoint_description;
+    delete merge.dentist_id;
+    delete merge.gender_id;
+    delete merge.gender_code;
+    delete merge.machine_description;
+    delete merge.machine_id;
+    delete merge.nationality_id;
+    delete merge.status_id;
     delete merge.id;
     delete merge.createdDate;
     delete merge.companyPatientId;
     delete merge.patientKey;
+    delete merge.patient_patientKey;
+    delete merge.patient_companyPatientId;
     delete merge.appStatus;
     delete merge.appUsername;
+    delete merge.duration;
     return Object.keys(merge);
 }
 
@@ -56,7 +72,9 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
-            if(typeof key === "string" && key.toUpperCase().includes("DATE")){
+            if(typeof key === "string" && 
+                (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
+                ){
                 return moment(val).format("DD/MM/YYYY");
             }
             return val.toString();
