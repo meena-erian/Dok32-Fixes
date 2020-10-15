@@ -97,8 +97,8 @@ function escapeDataValue(val, key){
  * 
  * @param {object} objArr 
  */
-function objArrTOTable(objArr){
-    var header = getObjArrTableHeader(objArr);
+function objArrTOTable(objArr, header){
+    if(!header) header = getObjArrTableHeader(objArr);
     //console.log("Header:", header);
     var table = document.createElement("table");
     table.className = "table table-striped";

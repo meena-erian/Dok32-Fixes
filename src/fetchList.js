@@ -67,7 +67,7 @@ function setProgressRatio(loaded, total, progressbarID, counterID){
  * 
  * @return {object[] | false} Returns the list or false on failure.
  */
-async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID, mergeFunc, customStructure){
+async function fetchList(endpoint, params, reccursion = false, limit = 100, progressbarID, counterID, mergeFunc){
     var start = 0;
     let queryString = "";
     for (var key in params) {

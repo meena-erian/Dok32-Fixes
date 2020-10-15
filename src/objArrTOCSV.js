@@ -98,8 +98,8 @@ function escapeCSVValue(val, key){
  * 
  * @param {object} objArr 
  */
-function objArrTOCSV(objArr){
-    var header = getJSONTableHeader(objArr);
+function objArrTOCSV(objArr, header){
+    if(!header) header = getJSONTableHeader(objArr);
     console.log("Header:", header);
     var CSVstr = "";
     header.forEach(column => {

@@ -140,7 +140,7 @@ const reportsParams = {
         api: "report/appointment/list.json",
         limit: 100,
         paramsProps: ["searchParams"],
-        customStructure: ["createdDate", "formattedTime", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_documentPasswordNumber", "patient_documentNationalIdNumber", "patient_documentDriverLicenseNumber", "patient_email", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status_name", "category_name", "dentist_name", "futureAppointmentDate"]
+        customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     }
 }
@@ -185,7 +185,7 @@ function runReport(){
     }
     else {
         window.$("#reportModal").modal();
-        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc, reportP.customStructure)
+        fetchList(reportP.api, {...params, ...reportP.additionalParams}, true, reportP.limit, "report-progress", "report-progress-counter", reportP.mergeFunc)
             .then(res => {
                 console.log(res);
                 if(res.length){
@@ -207,8 +207,8 @@ function runReport(){
                             return false;
                         })
                     }
-                    tableResults.append(objArrTOTable(res));
-                    var CSVstr = objArrTOCSV(res);
+                    tableResults.append(objArrTOTable(res, reportP.customStructure));
+                    var CSVstr = objArrTOCSV(res, reportP.customStructure);
                     downloadButton.setAttribute("href", 
                     `data:application/octet-stream;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(CSVstr)))}`);
                 }
