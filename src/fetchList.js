@@ -6,6 +6,7 @@ var renameMap = {
     "status_name" : "status",
     "formattedTime" : "time",
     "category_name" : "type",
+    "patient_addressTO" : "state",
     "patient_documentPasswordNumber" : "patient_passport",
     "patient_documentNationalIdNumber" : "patient_NationalIdNumber",
     "patient_documentDriverLicenseNumber" : "patient_DriverLicenseNumber"
