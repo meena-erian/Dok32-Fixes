@@ -1,3 +1,19 @@
+function flattenObject(obj){
+    let keys = Object.keys(obj);
+    keys.forEach(key => {
+        if(typeof obj[key] === "object"){
+            let objProp = {};
+            Object.assign(objProp, obj[key]);
+            delete obj[key];
+            let subKeys = Object.keys(objProp);
+            subKeys.forEach(subkey => {
+                obj[`${key}_${subkey}`] = objProp[subkey];
+            });
+        }
+    });
+    return obj;
+}
+
 function setProgressRatio(loaded, total, progressbarID, counterID){
     let completionRatio = Math.round(loaded / total * 100);
     let progressElement = document.getElementById(progressbarID);
@@ -57,10 +73,10 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             }));
             results.filter(r => r !== undefined);
             //console.log(results);
-            list = list.concat(results);
+            list = list.concat(results.map(flattenObject));
         }
         else{
-            list = list.concat(response.data.list);
+            list = list.concat(response.data.list.map(flattenObject));
         }
         if(totalCount !== undefined && progressbarID) {
             if(!setProgressRatio(list.length, totalCount, progressbarID, counterID)) break;
