@@ -3,6 +3,13 @@ var renameMap = {
     "gender_name" : "gender",
     "nationality_name" : "nationality",
     "clinic_name" : "clinic",
+    "status_name" : "status",
+    "formattedTime" : "time",
+    "category_name" : "type",
+    "patient_addressTO" : "state",
+    "patient_documentPasswordNumber" : "patient_passport",
+    "patient_documentNationalIdNumber" : "patient_NationalIdNumber",
+    "patient_documentDriverLicenseNumber" : "patient_DriverLicenseNumber"
 }
 
 function renameFields(obj){

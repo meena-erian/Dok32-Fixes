@@ -54,14 +54,14 @@ function getJSONTableHeader(objArr){
     delete merge.nationality_id;
     delete merge.status_id;
     delete merge.id;
-    delete merge.createdDate;
+    //delete merge.createdDate;
     delete merge.companyPatientId;
     delete merge.patientKey;
     delete merge.patient_patientKey;
     delete merge.patient_companyPatientId;
     delete merge.appStatus;
     delete merge.appUsername;
-    delete merge.duration;
+    //delete merge.duration;
     return Object.keys(merge);
 }
 
@@ -72,10 +72,10 @@ function getJSONTableHeader(objArr){
 function escapeCSVValue(val, key){
     switch(typeof val){
         case "number":
-            if(typeof key === "string" && 
-                (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
-                ){
-                return moment(val).format("DD/MM/YYYY");
+            if(typeof key === "string"){
+                if (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
+                    return moment(val).format("DD/MM/YYYY");
+                if (key === "duration") return val / 60000;
             }
             return val.toString();
         case "string":
@@ -87,6 +87,14 @@ function escapeCSVValue(val, key){
             if(typeof key === "string" && key.toUpperCase().includes("EMAIL") && !validEmail(val)) return "";
             return `"${val.replace(/"/g, `""`)}"`;
         case "object":
+            if(typeof key === "string"){
+                switch(key){
+                    case "state":
+                        if(val.state)
+                            return `"${val.state.name.replace(/"/g, `""`)}"`;
+                        else return "";
+                }
+            }
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
             else return val.name;
         case "undefined":
@@ -98,8 +106,8 @@ function escapeCSVValue(val, key){
  * 
  * @param {object} objArr 
  */
-function objArrTOCSV(objArr){
-    var header = getJSONTableHeader(objArr);
+function objArrTOCSV(objArr, header){
+    if(!header) header = getJSONTableHeader(objArr);
     console.log("Header:", header);
     var CSVstr = "";
     header.forEach(column => {
