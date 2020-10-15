@@ -90,7 +90,9 @@ function escapeDataValue(val, key){
             if(typeof key === "string"){
                 switch(key){
                     case "state":
-                        return val.state.name;
+                        if(val.state)
+                            return val.state.name;
+                        else return "";
                 }
             }
             return val.name;

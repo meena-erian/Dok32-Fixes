@@ -90,7 +90,9 @@ function escapeCSVValue(val, key){
             if(typeof key === "string"){
                 switch(key){
                     case "state":
-                        return `"${val.state.name.replace(/"/g, `""`)}"`;
+                        if(val.state)
+                            return `"${val.state.name.replace(/"/g, `""`)}"`;
+                        else return "";
                 }
             }
             if(typeof val.name === "string") return `"${val.name.replace(/"/g, `""`)}"`;
