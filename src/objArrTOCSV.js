@@ -75,7 +75,7 @@ function escapeCSVValue(val, key){
             if(typeof key === "string"){
                 if (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
                     return moment(val).format("DD/MM/YYYY");
-                if (key === "duration") return key / 60000;
+                if (key === "duration") return val / 60000;
             }
             return val.toString();
         case "string":
