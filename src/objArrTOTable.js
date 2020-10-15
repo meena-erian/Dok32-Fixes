@@ -72,10 +72,10 @@ function getObjArrTableHeader(objArr){
 function escapeDataValue(val, key){
     switch(typeof val){
         case "number":
-            if(typeof key === "string" && 
-                (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
-                ){
-                return moment(val).format("DD/MM/YYYY");
+            if(typeof key === "string"){
+                if (key.toUpperCase().includes("DATE") || key === "startTime" || key === "checkedIn")
+                    return moment(val).format("DD/MM/YYYY");
+                if (key.toUpperCase() === "duration") return key / 60000;
             }
             return val.toString();
         case "string":
