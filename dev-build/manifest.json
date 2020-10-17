@@ -1,7 +1,7 @@
 {
   "name": "Dok32 Fixes",
-  "version": "2.1.0",
-  "manifest_version": 2,
+  "version": "3.1.0",
+  "manifest_version": 3,
   "description": "Some fixes and new features injected to Dok32 by Meena",
   "icons": {
     "16": "icon16.png",
@@ -18,9 +18,12 @@
     "default_title": "Dok32 fixes"
   },
   "permissions": [
+    "webRequest",
     "webNavigation",
     "https://everlast-office.dok32.com/*",
     "http://everlast-office.dok32.com/*",
+    "https://app.dok32.com/*",
+    "http://app.dok32.com/*",
     "tabs"
   ],
   "content_scripts": [
