@@ -6,11 +6,11 @@
  */
 function trafficSpoofer(func){
     XMLHttpRequest.prototype.oldSend = XMLHttpRequest.prototype.send;
-    var newSend = function (body) {
+    XMLHttpRequest.prototype.send = function (body) {
         func(body, this);
+        console.log("Test:", body,"This:", this);
         return this.oldSend(body);
     };
-    XMLHttpRequest.prototype.send = newSend;
 }
 
 export {trafficSpoofer};
