@@ -15,7 +15,7 @@ function trafficSpoofer(func){
             }
             else{
                 if(retrys < 500){
-                    window.setTimeout(func, 100, params.b, params.xhr);
+                    window.setTimeout(checkifitscomplete, 100);
                     retrys = retrys + 1;
                 }
             }
