@@ -27,7 +27,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://everlast-office.dok32.com/*"],
+      "matches": ["*://everlast-office.dok32.com/*", "*://app.dok32.com/*"],
       "js": ["inject.js"]
     }
   ]
