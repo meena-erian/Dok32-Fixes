@@ -30,6 +30,7 @@
 		"sendSMSButton.js",
 		"sendSMSModal.js",
 		"viewReportButton.js",
+		"trafficSpoofer.js",
 	]
 
 	components.forEach(comp => preload(comp));

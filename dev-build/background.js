@@ -7,3 +7,28 @@ chrome.webNavigation.onDOMContentLoaded.addListener(function (tab) {
 	});
 });
 */
+
+/**
+ * details = {
+ * 	{string} requestId,
+ *  {string} url,
+ *  {string} method,
+ *  {integer} frameId,
+ *  {integer} parentFrameId,
+ *  {integer} tabId,
+ *  {ResourceType} type,
+ *  {string} (optional) initiator,
+ *  {double} timeStamp,
+ *  {string} (optional) ip,
+ *  {boolean} fromCache,
+ *  {integer} statusCode,
+ *  {HttpHeaders} (optional) responseHeaders,
+ *  {string} statusLine
+ * }
+ 
+chrome.webRequest.onCompleted.addListener(
+	function (details){
+		console.log("weRequest: ", details);
+	}
+);
+*/
