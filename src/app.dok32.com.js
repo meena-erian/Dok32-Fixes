@@ -4,6 +4,9 @@ function appDok32Com(){
     console.log("Dok32 Fixes extension loaded.");
     trafficSpoofer(
         function (json, xhr) {
+            if(!xhr || !xhr.status){
+                console.log("XHR object not provided! ", xhr);
+            }
             console.log(`XHR: ${xhr.status} : ${xhr.responseURL} `);
             var request = undefined;
             var response = undefined; 
