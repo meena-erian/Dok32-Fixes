@@ -4,7 +4,6 @@ function appDok32Com(){
     console.log("Dok32 Fixes extension loaded.");
     trafficSpoofer(
         function (json, xhr) {
-            while(!xhr.status);
             console.log(`XHR: ${xhr.status} : ${xhr.responseURL} `);
             var request = undefined;
             var response = undefined; 
