@@ -32,6 +32,12 @@ function appDok32Com(){
                         console.log(response);
                     }
                 }
+                else {
+                    console.log("Missing data: \nRequest: ", request, "\n\nResponse:", response);
+                }
+            }
+            else {
+                console.log(xhr.responseURL);
             }
         }
     );
