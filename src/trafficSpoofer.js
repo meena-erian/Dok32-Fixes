@@ -13,8 +13,4 @@ function trafficSpoofer(func){
     XMLHttpRequest.prototype.send = newSend;
 }
 
-trafficSpoofer((body, th) => {
-    console.log("Body: ", body, "\n\nThis: ", th);
-});
-
 export {trafficSpoofer};
