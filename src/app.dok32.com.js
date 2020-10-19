@@ -5,7 +5,7 @@ function appDok32Com(){
     trafficSpoofer(
         function (json, xhr) {
             if(!xhr || !xhr.status){
-                console.log("XHR object not provided! ", xhr);
+                console.log("XHR object not provided! \nXHR:", xhr, "REQUEST:", json);
             }
             console.log(`XHR: ${xhr.status} : ${xhr.responseURL} `);
             var request = undefined;
