@@ -7,8 +7,7 @@
 function trafficSpoofer(func){
     window.XMLHttpRequest.prototype.oldSend = window.XMLHttpRequest.prototype.send;
     window.XMLHttpRequest.prototype.send = function (body) {
-        var cop = this;
-        window.setTimeout(func, 5000, [body, cop]);
+        window.setTimeout(func, 5000, body, this);
         return this.oldSend(body);
     };
 }
