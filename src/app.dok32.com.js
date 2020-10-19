@@ -5,22 +5,33 @@ function appDok32Com(){
     trafficSpoofer(
         function (json, xhr) {
             if(!xhr || !xhr.status){
-                console.log("XHR object not provided! \nXHR:", xhr, "REQUEST:", json);
+                //console.log("XHR object not provided! \nXHR:", xhr, "REQUEST:", json);
+                return;
             }
-            console.log(`XHR: ${xhr.status} : ${xhr.responseURL} `);
+            //console.log(`XHR: ${xhr.status} : ${xhr.responseURL} `);
             var request = undefined;
             var response = undefined; 
             try {
                 request = JSON.parse(json);
-                console.log("\nRequest: \n", request);
+                //console.log("\nRequest: \n", request);
             } catch(e) {
-                console.log("Failed to parse JSON Request");
+                //console.log("Failed to parse JSON Request");
             }
             try {
                 response = JSON.parse(xhr.responseText);
-                console.log("\nResponse: \n", response);
+                //console.log("\nResponse: \n", response);
             } catch(e) {
-                console.log("Failed to parse JSON Request");
+                //console.log("Failed to parse JSON Request");
+            }
+            if(xhr.responseURL === "https://everlast-office.dok32.com:4443/api/clinic/appointment/item.json"){
+                if(response && request){
+                    if(response.statusCode === 2){
+                        console.log("Appointment udated: ", request);
+                    }
+                    else{
+                        console.log(response);
+                    }
+                }
             }
         }
     );
