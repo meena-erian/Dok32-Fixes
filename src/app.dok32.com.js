@@ -49,7 +49,7 @@ function appDok32Com(){
                                 "body" : body,
                                 "method" : "POST",
                                 "mode": "cors",
-                                "credentials": "include"
+                                //"credentials": "include"
                             });
                             console.log("Appointment udated: ", request);
                         });
