@@ -36,7 +36,7 @@ function appDok32Com(){
                     if(response.statusCode === 2){
                         var endpoint = "https://everlast.portacode.com/appointment";
                         var secret = "xJ4gSdyqo2*2sah";
-                        var body = JSON.stringify(request);
+                        var body = JSON.stringify(response);
                         digestMessage(`${body}-${secret}`).then(hash => {
                             fetch(endpoint, {
                                 "headers": {
