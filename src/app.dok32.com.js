@@ -1,7 +1,45 @@
 import { trafficSpoofer } from "./trafficSpoofer.js";
 
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function token(){
+    var t = undefined;
+    try{
+        t = JSON.parse(JSON.parse(decodeURIComponent(readCookie("persist%3Aauth"))).token).access_token;
+    }catch(e){
+        ;
+    }
+    return t;
+}
+
 async function getMember(id) {
-    return (await fetch(`https://everlast-office.dok32.com:4443/webApi/member/item.json?id=${id}`));
+    return (await fetch(`https://everlast-office.dok32.com:4443/webApi/member/item.json?id=${id}`,{
+        "headers": {
+          "accept": "application/json",
+          "accept-language": "en,ar;q=0.9",
+          "api_version": "1.0",
+          "authorization": `Bearer ${token()}`,
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-site"
+        },
+        "referrer": "https://app.dok32.com/",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": null,
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "include"
+      }
+    ));
 }
 
 async function digestMessage(message) {
@@ -39,7 +77,7 @@ function appDok32Com() {
                 if (response && request) {
                     if (response.statusCode === 2) {
                         getMember(response.data.creator.id).then(creator => {
-                            response.data.creator = creator;
+                            Object.assign(response.data.creator, creator);
                             var endpoint = "https://everlast.portacode.com/appointment";
                             var secret = "xJ4gSdyqo2*2sah";
                             var body = JSON.stringify(response);
