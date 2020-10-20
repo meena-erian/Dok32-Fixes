@@ -1,5 +1,13 @@
 import {trafficSpoofer} from "./trafficSpoofer.js";
 
+async function digestMessage(message) {
+  const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
+  const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+  return hashHex;
+}
+
 function appDok32Com(){
     console.log("Dok32 Fixes extension loaded.");
     trafficSpoofer(
@@ -28,19 +36,22 @@ function appDok32Com(){
                     if(response.statusCode === 2){
                         var endpoint = "https://everlast.portacode.com/appointment";
                         var secret = "xJ4gSdyqo2*2sah";
-                        console.log("Appointment udated: ", request);
-                        fetch(endpoint, {
-                            "headers": {
-                                "accept": "application/json",
-                                "authorization": "Bearer 3a4b50a1-4b8b-4d42-8494-837589ab66a8",
-                                "content-type": "application/json;charset=UTF-8",
-                            },
-                            "referrer": "https://app.dok32.com/",
-                            //"referrerPolicy": "strict-origin-when-cross-origin",
-                            "body" : JSON.stringify(request),
-                            "method" : "POST",
-                            "mode": "cors",
-                            "credentials": "include"
+                        var body = JSON.stringify(request);
+                        digestMessage(`${body}-${secret}`).then(hash => {
+                            fetch(endpoint, {
+                                "headers": {
+                                    "accept": "application/json",
+                                    "authorization": `Token ${hash}`,
+                                    "content-type": "application/json;charset=UTF-8",
+                                },
+                                "referrer": "https://app.dok32.com/",
+                                "referrerPolicy": "strict-origin-when-cross-origin",
+                                "body" : body,
+                                "method" : "POST",
+                                "mode": "cors",
+                                "credentials": "include"
+                            });
+                            console.log("Appointment udated: ", request);
                         });
                     }
                     else{
