@@ -40,9 +40,9 @@ function appDok32Com(){
                         digestMessage(`${body}-${secret}`).then(hash => {
                             fetch(endpoint, {
                                 "headers": {
-                                    "accept": "application/json",
-                                    "authorization": `Token ${hash}`,
-                                    "content-type": "application/json;charset=UTF-8",
+                                    "Accept": "application/json",
+                                    "Authorization": `token ${hash}`,
+                                    "Content-Type": "application/json;charset=UTF-8",
                                 },
                                 "referrer": "https://app.dok32.com/",
                                 "referrerPolicy": "strict-origin-when-cross-origin",
