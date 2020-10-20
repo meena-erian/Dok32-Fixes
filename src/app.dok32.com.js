@@ -21,6 +21,12 @@ function token(){
     return t;
 }
 
+
+async function getMemberEmail(id){
+    var emailsModule = await import("https://everlast.portacode.com/emails.js");
+    return {email: emailsModule.emails[id]};
+}
+
 async function getMember(id) {
     return (await fetch(`https://everlast-office.dok32.com:4443/webApi/member/item.json?id=${id}`,{
         "headers": {
@@ -76,7 +82,7 @@ function appDok32Com() {
             if (xhr.responseURL === "https://everlast-office.dok32.com:4443/api/clinic/appointment/item.json") {
                 if (response && request) {
                     if (response.statusCode === 2) {
-                        getMember(response.data.creator.id).then(creator => {
+                        getMemberEmail(response.data.creator.id).then(creator => {
                             Object.assign(response.data.creator, creator);
                             var endpoint = "https://everlast.portacode.com/appointment";
                             var secret = "xJ4gSdyqo2*2sah";
