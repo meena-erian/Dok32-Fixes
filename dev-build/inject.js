@@ -13,8 +13,8 @@
 		mpreload.href = `${base}/${file}`;
 		document.head.append(mpreload);
 	}
-	
-	const components = [
+
+	var components = [
 		"addFunctionButtons.js",
 		"addPagination.js",
 		"analyzeFormStructure.js",
@@ -30,15 +30,32 @@
 		"sendSMSButton.js",
 		"sendSMSModal.js",
 		"viewReportButton.js",
-	]
+	];
+
+	if (document.location.host === "app.dok32.com") {
+		components = [
+			"trafficSpoofer.js",
+			"app.dok32.com.js"
+		];
+	}
 
 	components.forEach(comp => preload(comp));
 
-	let inDocScript = document.createElement("script");
-	inDocScript.innerHTML = `
-	import("${base}/index.js").then(indexModule =>
-		indexModule.default()
-	);
-	`;
-	document.body.append(inDocScript);
+	function runWindowModule(base, module, func) {
+		let inDocScript = document.createElement("script");
+		inDocScript.innerHTML = `
+		import("${base}/${module}").then(m =>
+			m[\`${func}\`]()
+		);
+		`;
+		document.body.append(inDocScript);
+	}
+
+	if(document.location.host === "app.dok32.com"){
+		runWindowModule(base, "app.dok32.com.js", "appDok32Com");
+	}
+	else {
+		runWindowModule(base, "index.js", "default");
+	}
+	
 })();

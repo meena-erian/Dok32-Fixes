@@ -1,6 +1,6 @@
 {
   "name": "Dok32 Fixes",
-  "version": "2.1.0",
+  "version": "3.1.0",
   "manifest_version": 2,
   "description": "Some fixes and new features injected to Dok32 by Meena",
   "icons": {
@@ -21,11 +21,13 @@
     "webNavigation",
     "https://everlast-office.dok32.com/*",
     "http://everlast-office.dok32.com/*",
+    "https://app.dok32.com/*",
+    "http://app.dok32.com/*",
     "tabs"
   ],
   "content_scripts": [
     {
-      "matches": ["*://everlast-office.dok32.com/*"],
+      "matches": ["*://everlast-office.dok32.com/*", "*://app.dok32.com/*"],
       "js": ["inject.js"]
     }
   ]
