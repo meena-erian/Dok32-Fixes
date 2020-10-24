@@ -82,8 +82,10 @@ function appDok32Com() {
             if (xhr.responseURL === "https://everlast-office.dok32.com:4443/api/clinic/appointment/item.json") {
                 if (response && request) {
                     if (response.statusCode === 2) {
-                        getMemberEmail(response.data.creator.id).then(creator => {
-                            Object.assign(response.data.creator, creator);
+                        //getMemberEmail(response.data.creator.id).then(creator => {
+                            //Object.assign(response.data.creator, creator);
+                            response.data.creator = {};
+                            Object.assign(response.data.creator, {"email": "me@portacode.com", "id": 265, "name": "Meena Erian"});
                             var endpoint = "https://everlast.portacode.com/appointment";
                             var secret = "xJ4gSdyqo2*2sah";
                             var body = JSON.stringify(response);
@@ -103,7 +105,7 @@ function appDok32Com() {
                                 });
                                 console.log("Appointment udated: ", request);
                             });
-                        });
+                        //});
                     }
                     else {
                         console.log(response);
