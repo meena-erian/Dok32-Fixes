@@ -162,19 +162,20 @@ function runReport(){
     tableResults.innerHTML = "";
     var params = {};
     let reportP = reportsParams[reportHash];
-    reportP.paramsProps.forEach(source => {
-        if(source === "dateParams"){
-            let data = findInAngularApp(source);
-            let keys = Object.keys(data);
-            keys.forEach(key => {
-                data[key] = new Date(data[key]).getTime();
-            });
-            Object.assign(params, data);
-        }
-        else{
-            Object.assign(params, findInAngularApp(source));
-        }
-    });
+    if(reportP && reportP.paramsProps)
+        reportP.paramsProps.forEach(source => {
+            if(source === "dateParams"){
+                let data = findInAngularApp(source);
+                let keys = Object.keys(data);
+                keys.forEach(key => {
+                    data[key] = new Date(data[key]).getTime();
+                });
+                Object.assign(params, data);
+            }
+            else{
+                Object.assign(params, findInAngularApp(source));
+            }
+        });
     
     if(params.start !== undefined) delete params.start;
     if(params.limit !== undefined) delete params.limit;
