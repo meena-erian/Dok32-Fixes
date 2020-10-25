@@ -121,11 +121,11 @@ async function mergeWithPatientContactDetails(record){
 function restructureTallyReport(res){
     var summary = {};
     res.forEach(a => {
-        if(summary[a.creator_name]){
-            summary[a.creator_name] += 1;
+        if(summary[a.type]){
+            summary[a.type] += 1;
         }
         else{
-            summary[a.creator_name] = 1;
+            summary[a.type] = 1;
         }
     });
     var summaryArr = [];
