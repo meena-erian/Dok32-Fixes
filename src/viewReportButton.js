@@ -78,6 +78,7 @@ async function getPatientByKey(patient){
 }
 
 
+
 /**
  * Function that takes an array of objects containing the chartNumber
  *   and assignes to each the patient's contact details.
@@ -117,6 +118,10 @@ async function mergeWithPatientContactDetails(record){
     return patientWithKey;
 }
 
+function restructureTallyReport(res){
+
+}
+
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
@@ -146,9 +151,9 @@ const reportsParams = {
     AppointmentTypeList : {
         api: "report/appointment/list.json",
         limit: 100,
-        paramsProps: ["searchParams"]
+        paramsProps: ["searchParams"],
+        filter: restructureTallyReport
     }
-    
 }
 
 function runReport(){
@@ -212,7 +217,10 @@ function runReport(){
                             }
                             console.log(`RecordNumber: ${rec.chartNumber} was filtered successsfully`);
                             return false;
-                        })
+                        });
+                    }
+                    if(reportP.filter){
+                        res = reportP.filter(res);
                     }
                     tableResults.append(objArrTOTable(res, reportP.customStructure));
                     var CSVstr = objArrTOCSV(res, reportP.customStructure);
