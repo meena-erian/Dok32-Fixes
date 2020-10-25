@@ -119,7 +119,21 @@ async function mergeWithPatientContactDetails(record){
 }
 
 function restructureTallyReport(res){
-
+    var summary = {};
+    res.forEach(a => {
+        if(summary[a.category.name]){
+            summary[a.category.name].count += 1;
+        }
+        else{
+            summary[a.category.name].count = 1;
+        }
+    });
+    var summaryArr = [];
+    var keys = Object.keys(summary);
+    keys.forEach(key => {
+        summaryArr.push({type: key, appointmentCount: summary[key]});
+    });
+    return summaryArr;
 }
 
 const reportsParams = {
