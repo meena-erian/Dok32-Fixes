@@ -142,7 +142,13 @@ const reportsParams = {
         paramsProps: ["searchParams"],
         customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
+    },
+    AppointmentTypeList : {
+        api: "report/appointment/list.json",
+        limit: 100,
+        paramsProps: ["searchParams"]
     }
+    
 }
 
 function runReport(){
