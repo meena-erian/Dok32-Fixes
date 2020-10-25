@@ -29,7 +29,7 @@ function removeSMSButton(){
     var smsButton = document.getElementById("send-sms-button");
     if(smsButton){
         header.removeChild(smsButton);
-        delete smsButton;
+        //delete smsButton;
     }
 }
 /**
