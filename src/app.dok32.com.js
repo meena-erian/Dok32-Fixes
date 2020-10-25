@@ -108,6 +108,23 @@ async function digestMessage(message) {
     return hashHex;
 }
 
+var scheduledSMS = {};
+
+function updateWindowLock(){
+    var keys = Object.keys(scheduledSMS);
+    if(keys.length){
+        window.onbeforeunload = function(e){
+            const msg = "Please wait until SMS confirmation is sent to the Patient";
+            e.returnValue = msg;
+            alert(msg);
+            return msg;
+        }
+    }
+    else{
+        window.onbeforeunload = null;
+    }
+}
+
 function appDok32Com() {
     console.log("Dok32 Fixes extension loaded.");
     insertStyles();
@@ -143,31 +160,27 @@ function appDok32Com() {
                             var secret = "xJ4gSdyqo2*2sah";
                             var body = JSON.stringify(response);
                             digestMessage(`${body}-${secret}`).then(hash => {
-                                injectSMSButton(
-                                    () => {
-                                        fetch(endpoint, {
-                                            "headers": {
-                                                "Accept": "application/json",
-                                                "Authorization": `token ${hash}`,
-                                                "Content-Type": "application/json;charset=UTF-8",
-                                            },
-                                            "referrer": "https://app.dok32.com/",
-                                            "referrerPolicy": "strict-origin-when-cross-origin",
-                                            "body": body,
-                                            "method": "POST",
-                                            "mode": "cors",
-                                            //"credentials": "include"
-                                        });
-                                        window.onbeforeunload = null;
-                                        removeSMSButton();
-                                    }
-                                );
-                                window.onbeforeunload = function(e) { 
-                                    const msg = "Client was not notified about the Apppointment. Please use the SMS button before closing";
-                                    e.returnValue = msg;
-                                    return msg;
-                                };
-                                console.log("Appointment updated: ", request);
+                                if(scheduledSMS[response.data.id]) clearTimeout(scheduledSMS[response.data.id]);
+                                scheduledSMS[response.data.id] = setTimeout(() => {
+                                    fetch(endpoint, {
+                                        "headers": {
+                                            "Accept": "application/json",
+                                            "Authorization": `token ${hash}`,
+                                            "Content-Type": "application/json;charset=UTF-8",
+                                        },
+                                        "referrer": "https://app.dok32.com/",
+                                        "referrerPolicy": "strict-origin-when-cross-origin",
+                                        "body": body,
+                                        "method": "POST",
+                                        "mode": "cors",
+                                    }).then(res => {
+                                        delete scheduledSMS[response.data.id];
+                                        updateWindowLock();
+                                    });
+                                }, 300000);
+                                updateWindowLock();
+                                console.log("Appointment udated: ", request);
+
                             });
                         //});
                     }
