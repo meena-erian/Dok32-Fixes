@@ -1,5 +1,57 @@
 import { trafficSpoofer } from "./trafficSpoofer.js";
 
+const clickableStyle = `
+.clickable{
+    cursor: pointer;
+}
+.clickable.send-sms{
+    background-image: url(https://everlast.portacode.com/fixed-assets/send-sms.png);
+    background-size: 40px;
+}
+.clickable:hover{
+    filter: hue-rotate(45deg);
+}
+.clickable:active{
+    filter: invert(1);
+}
+`;
+
+
+function insertStyles(){
+    var s = document.createElement("style");
+    s.innerHTML = clickableStyle;
+    document.head.appendChild(s);
+}
+
+
+function removeSMSButton(){
+    var header = document.querySelector(".appointment-header");
+    var smsButton = document.getElementById("send-sms-button");
+    if(smsButton){
+        header.removeChild(smsButton);
+        //delete smsButton;
+    }
+}
+/**
+ * A function the inserts or overwrites the send SMS button
+ * 
+ * @param {function} onclick The function to be executed when the button is clicked.
+ */
+function injectSMSButton(onclick/* : function */){
+    // Remove old button if any
+    removeSMSButton();
+    var header = document.querySelector(".appointment-header");
+    var sendSMSButton = document.createElement("i");
+    sendSMSButton.className = "icon-btn clickable send-sms";
+    sendSMSButton.id = "send-sms-button";
+    sendSMSButton.addEventListener("click", onclick);
+    header.insertBefore(sendSMSButton, header.children[3]);
+}
+
+
+
+
+
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -56,8 +108,26 @@ async function digestMessage(message) {
     return hashHex;
 }
 
+var scheduledSMS = {};
+
+function updateWindowLock(){
+    var keys = Object.keys(scheduledSMS);
+    if(keys.length){
+        window.onbeforeunload = function(e){
+            const msg = "Please wait until SMS confirmation is sent to the Patient";
+            e.returnValue = msg;
+            alert(msg);
+            return msg;
+        }
+    }
+    else{
+        window.onbeforeunload = null;
+    }
+}
+
 function appDok32Com() {
     console.log("Dok32 Fixes extension loaded.");
+    insertStyles();
     trafficSpoofer(
         function (json, xhr) {
             if (!xhr || !xhr.status) {
@@ -90,20 +160,27 @@ function appDok32Com() {
                             var secret = "xJ4gSdyqo2*2sah";
                             var body = JSON.stringify(response);
                             digestMessage(`${body}-${secret}`).then(hash => {
-                                fetch(endpoint, {
-                                    "headers": {
-                                        "Accept": "application/json",
-                                        "Authorization": `token ${hash}`,
-                                        "Content-Type": "application/json;charset=UTF-8",
-                                    },
-                                    "referrer": "https://app.dok32.com/",
-                                    "referrerPolicy": "strict-origin-when-cross-origin",
-                                    "body": body,
-                                    "method": "POST",
-                                    "mode": "cors",
-                                    //"credentials": "include"
-                                });
+                                if(scheduledSMS[response.data.id]) clearTimeout(scheduledSMS[response.data.id]);
+                                scheduledSMS[response.data.id] = setTimeout(() => {
+                                    fetch(endpoint, {
+                                        "headers": {
+                                            "Accept": "application/json",
+                                            "Authorization": `token ${hash}`,
+                                            "Content-Type": "application/json;charset=UTF-8",
+                                        },
+                                        "referrer": "https://app.dok32.com/",
+                                        "referrerPolicy": "strict-origin-when-cross-origin",
+                                        "body": body,
+                                        "method": "POST",
+                                        "mode": "cors",
+                                    }).then(res => {
+                                        delete scheduledSMS[response.data.id];
+                                        updateWindowLock();
+                                    });
+                                }, 300000);
+                                updateWindowLock();
                                 console.log("Appointment udated: ", request);
+
                             });
                         //});
                     }
