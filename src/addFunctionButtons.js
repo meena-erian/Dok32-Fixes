@@ -13,8 +13,8 @@ function addFunctionButtons(){
             btn.parentElement.append("  ");
             //btn.parentElement.append(downloadCSVButton());
             //btn.parentElement.append("  ");
-            btn.parentElement.append(sendSMSButton());
-            btn.parentElement.append("  ");
+            //btn.parentElement.append(sendSMSButton());
+            //btn.parentElement.append("  ");
             btn.parentElement.append(viewReportButton());
             btn.parentElement.append("  ");
         }
