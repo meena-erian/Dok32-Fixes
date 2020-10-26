@@ -124,14 +124,13 @@ function restructureTallyReport(res){
         if(summary[a.type]){
             if(summary[a.type][window.moment(a.date).format("LL")]){
                 summary[a.type][window.moment(a.date).format("LL")] += 1;
-                summary[a.type].total += 1;
             }
             else {
                 summary[a.type][window.moment(a.date).format("LL")] = 1;
             }
         }
         else{
-            summary[a.type] = {total: 1};
+            summary[a.type] = {};
             summary[a.type][window.moment(a.date).format("LL")] = 1
         }
     });
@@ -140,7 +139,9 @@ function restructureTallyReport(res){
     keys.forEach(key => {
         var row = {type: key};
         var days = Object.keys(summary[key]);
-        days.forEach(day => row[day] = summary[key][day]);
+        var total = 0;
+        days.forEach(day => {row[day] = summary[key][day]; total += row[day];});
+        row.total = total;
         summaryArr.push(row);
     });
     return summaryArr;
