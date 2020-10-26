@@ -32,7 +32,7 @@
 		"viewReportButton.js",
 	];
 
-	if (document.location.host === "app.dok32.com") {
+	if (document.location.host === "app.dok32.com" || document.location.host === "qa-app.dok32.com") {
 		components = [
 			"trafficSpoofer.js",
 			"app.dok32.com.js"
@@ -51,7 +51,7 @@
 		document.body.append(inDocScript);
 	}
 
-	if(document.location.host === "app.dok32.com"){
+	if(document.location.host === "app.dok32.com" || document.location.host === "qa-app.dok32.com"){
 		runWindowModule(base, "app.dok32.com.js", "appDok32Com");
 	}
 	else {
