@@ -78,6 +78,7 @@ async function getPatientByKey(patient){
 }
 
 
+
 /**
  * Function that takes an array of objects containing the chartNumber
  *   and assignes to each the patient's contact details.
@@ -117,6 +118,51 @@ async function mergeWithPatientContactDetails(record){
     return patientWithKey;
 }
 
+function restructureTallyReport(res){
+    var summary = {};
+    var minDate = null;
+    var maxDate = null;
+    res.forEach(a => {
+        if(!minDate || minDate > a.date) minDate = a.date;
+        if(!maxDate || maxDate < a.date) maxDate = a.date;
+        if(summary[a.type]){
+            if(summary[a.type][window.moment(a.date).format("LL")]){
+                summary[a.type][window.moment(a.date).format("LL")] += 1;
+            }
+            else {
+                summary[a.type][window.moment(a.date).format("LL")] = 1;
+            }
+        }
+        else{
+            summary[a.type] = {};
+            summary[a.type][window.moment(a.date).format("LL")] = 1
+        }
+    });
+
+    var summaryArr = [];
+    var header2 = {"": "Day", type: ""};
+    var date = minDate;
+    const oneDay = 24*3600*1000;
+    const maxDateStr = window.moment(maxDate).format("LL")
+    while((new Date(window.moment(date).format("LL"))) <= (new Date(maxDateStr))){
+        header2[window.moment(date).format("LL")] = window.moment(date).date();
+        date += oneDay;
+    }
+    header2.total = "";
+    var keys = Object.keys(summary);
+    keys.forEach(key => {
+        var row = {type: key};
+        var days = Object.keys(summary[key]);
+        var total = 0;
+        days.forEach(day => {row[day] = summary[key][day]; total += row[day];});
+        row.total = total;
+        summaryArr.push(row);
+    });
+    summaryArr = summaryArr.sort((a, b) => a.type.localeCompare(b.type));
+    summaryArr.unshift(header2);
+    return summaryArr;
+}
+
 const reportsParams = {
     NewPatients : {
         api: "report/patient/new-list.json",
@@ -142,6 +188,12 @@ const reportsParams = {
         paramsProps: ["searchParams"],
         customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
+    },
+    AppointmentTypeList : {
+        api: "report/appointment/list.json",
+        limit: 100,
+        paramsProps: ["searchParams"],
+        filter: restructureTallyReport
     }
 }
 
@@ -162,19 +214,20 @@ function runReport(){
     tableResults.innerHTML = "";
     var params = {};
     let reportP = reportsParams[reportHash];
-    reportP.paramsProps.forEach(source => {
-        if(source === "dateParams"){
-            let data = findInAngularApp(source);
-            let keys = Object.keys(data);
-            keys.forEach(key => {
-                data[key] = new Date(data[key]).getTime();
-            });
-            Object.assign(params, data);
-        }
-        else{
-            Object.assign(params, findInAngularApp(source));
-        }
-    });
+    if(reportP && reportP.paramsProps)
+        reportP.paramsProps.forEach(source => {
+            if(source === "dateParams"){
+                let data = findInAngularApp(source);
+                let keys = Object.keys(data);
+                keys.forEach(key => {
+                    data[key] = new Date(data[key]).getTime();
+                });
+                Object.assign(params, data);
+            }
+            else{
+                Object.assign(params, findInAngularApp(source));
+            }
+        });
     
     if(params.start !== undefined) delete params.start;
     if(params.limit !== undefined) delete params.limit;
@@ -205,7 +258,10 @@ function runReport(){
                             }
                             console.log(`RecordNumber: ${rec.chartNumber} was filtered successsfully`);
                             return false;
-                        })
+                        });
+                    }
+                    if(reportP.filter){
+                        res = reportP.filter(res);
                     }
                     tableResults.append(objArrTOTable(res, reportP.customStructure));
                     var CSVstr = objArrTOCSV(res, reportP.customStructure);
