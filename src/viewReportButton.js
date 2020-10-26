@@ -124,13 +124,14 @@ function restructureTallyReport(res){
         if(summary[a.type]){
             if(summary[a.type][window.moment(a.date).format("LL")]){
                 summary[a.type][window.moment(a.date).format("LL")] += 1;
+                summary[a.type].total += 1;
             }
             else {
                 summary[a.type][window.moment(a.date).format("LL")] = 1;
             }
         }
         else{
-            summary[a.type] = {};
+            summary[a.type] = {total: 1};
             summary[a.type][window.moment(a.date).format("LL")] = 1
         }
     });
