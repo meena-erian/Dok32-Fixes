@@ -122,16 +122,25 @@ function restructureTallyReport(res){
     var summary = {};
     res.forEach(a => {
         if(summary[a.type]){
-            summary[a.type] += 1;
+            if([a.type][window.moment(a.date).format("LL")]){
+                summary[a.type][window.moment(a.date).format("LL")] += 1;
+            }
+            else {
+                summary[a.type][window.moment(a.date).format("LL")] = 1;
+            }
         }
         else{
-            summary[a.type] = 1;
+            summary[a.type] = {};
+            summary[a.type][window.moment(a.date).format("LL")] = 1
         }
     });
     var summaryArr = [];
     var keys = Object.keys(summary);
     keys.forEach(key => {
-        summaryArr.push({type: key, appointmentCount: summary[key]});
+        var row = {type: key};
+        var days = Object.keys(summary[key]);
+        days.forEach(day => row[day] = summary[key][day]);
+        summaryArr.push(row);
     });
     return summaryArr;
 }
