@@ -120,7 +120,11 @@ async function mergeWithPatientContactDetails(record){
 
 function restructureTallyReport(res){
     var summary = {};
+    var minDate = null;
+    var maxDate = null;
     res.forEach(a => {
+        if(!minDate || minDate > a.date) minDate = a.date;
+        if(!maxDate || maxDate < a.date) maxDate = a.date;
         if(summary[a.type]){
             if(summary[a.type][window.moment(a.date).format("LL")]){
                 summary[a.type][window.moment(a.date).format("LL")] += 1;
@@ -134,7 +138,17 @@ function restructureTallyReport(res){
             summary[a.type][window.moment(a.date).format("LL")] = 1
         }
     });
+
     var summaryArr = [];
+    var header2 = {type: "Day"};
+    var date = minDate;
+    const oneDay = 24*3600*1000;
+    const maxDateStr = window.moment(maxDate).format("LL")
+    while((new Date(window.moment(date).format("LL"))) <= (new Date(maxDateStr))){
+        header2[window.moment(date).format("LL")] = window.moment(date).date();
+        date += oneDay;
+    }
+    header2.total = "";
     var keys = Object.keys(summary);
     keys.forEach(key => {
         var row = {type: key};
@@ -145,6 +159,7 @@ function restructureTallyReport(res){
         summaryArr.push(row);
     });
     summaryArr = summaryArr.sort((a, b) => a.type.localeCompare(b.type));
+    summaryArr.unshift([header2]);
     return summaryArr;
 }
 
