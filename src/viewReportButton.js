@@ -140,7 +140,7 @@ function restructureTallyReport(res){
     });
 
     var summaryArr = [];
-    var header2 = {type: "Day"};
+    var header2 = {"": "Day", type: ""};
     var date = minDate;
     const oneDay = 24*3600*1000;
     const maxDateStr = window.moment(maxDate).format("LL")
@@ -159,7 +159,7 @@ function restructureTallyReport(res){
         summaryArr.push(row);
     });
     summaryArr = summaryArr.sort((a, b) => a.type.localeCompare(b.type));
-    summaryArr.unshift([header2]);
+    summaryArr.unshift(header2);
     return summaryArr;
 }
 
