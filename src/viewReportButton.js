@@ -144,6 +144,7 @@ function restructureTallyReport(res){
         row.total = total;
         summaryArr.push(row);
     });
+    summaryArr = summaryArr.sort((a, b) => a.type.localeCompare(b.type));
     return summaryArr;
 }
 
