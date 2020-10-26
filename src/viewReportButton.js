@@ -122,7 +122,7 @@ function restructureTallyReport(res){
     var summary = {};
     res.forEach(a => {
         if(summary[a.type]){
-            if([a.type][window.moment(a.date).format("LL")]){
+            if(summary[a.type][window.moment(a.date).format("LL")]){
                 summary[a.type][window.moment(a.date).format("LL")] += 1;
             }
             else {
