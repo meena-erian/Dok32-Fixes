@@ -119,20 +119,20 @@ async function mergeWithPatientContactDetails(record){
 }
 
 function addPatientAgeRange(appointment){
-    var age_range = null;
-    if(appointment.patient_age < 20){
+    var age_range = "";
+    if(appointment.patient.age < 20){
         age_range = "Less than 20";
     }
-    else if(appointment.patient_age < 30){
+    else if(appointment.patient.age < 30){
         age_range = "20-30";
     }
-    else if(appointment.patient_age < 40){
+    else if(appointment.patient.age < 40){
         age_range = "31-40";
     }
-    else if(appointment.patient_age < 50){
+    else if(appointment.patient.age < 50){
         age_range = "41-50";
     }
-    else {
+    else if(appointment.patient.age >= 50){
         age_range = "Above 50";
     }
     appointment.patient_ageRange = age_range;
