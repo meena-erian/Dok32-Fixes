@@ -118,6 +118,27 @@ async function mergeWithPatientContactDetails(record){
     return patientWithKey;
 }
 
+function addPatientAgeRange(appointment){
+    var age_range = "";
+    if(appointment.patient.age < 20){
+        age_range = "Less than 20";
+    }
+    else if(appointment.patient.age < 30){
+        age_range = "20-30";
+    }
+    else if(appointment.patient.age < 40){
+        age_range = "31-40";
+    }
+    else if(appointment.patient.age < 50){
+        age_range = "41-50";
+    }
+    else if(appointment.patient.age >= 50){
+        age_range = "Above 50";
+    }
+    appointment.patient_ageRange = age_range;
+    return appointment;
+}
+
 function restructureTallyReport(res){
     var summary = {};
     var minDate = null;
@@ -186,7 +207,8 @@ const reportsParams = {
         api: "report/appointment/list.json",
         limit: 100,
         paramsProps: ["searchParams"],
-        customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "futureAppointmentDate"]
+        mergeFunc: addPatientAgeRange,
+        customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_ageRange", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     },
     AppointmentTypeList : {

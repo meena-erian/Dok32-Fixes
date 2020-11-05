@@ -127,6 +127,7 @@ function updateWindowLock(){
 
 function appDok32Com() {
     console.log("Dok32 Fixes extension loaded.");
+    document.title = "Dok32 - With Fixes";
     //insertStyles();
     trafficSpoofer(
         function (json, xhr) {
