@@ -49,7 +49,7 @@ function getObjArrTableHeader(objArr){
     delete merge.dentist_id;
     delete merge.gender_id;
     delete merge.gender_code;
-    delete merge.machine_description;
+    //delete merge.machine_description;
     delete merge.machine_id;
     delete merge.nationality_id;
     delete merge.status_id;
