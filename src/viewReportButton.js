@@ -208,7 +208,7 @@ const reportsParams = {
         limit: 100,
         paramsProps: ["searchParams"],
         mergeFunc: addPatientAgeRange,
-        customStructure: ["createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_ageRange", "patient_nationality", "patient_gender", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "machine_description", "futureAppointmentDate"]
+        customStructure: ["id", "createdDate", "time", "patient_chartNumber", "patient_firstName", "patient_lastName", "patient_passport", "patient_NationalIdNumber", "patient_DriverLicenseNumber", "patient_email", "state", "patient_dateOfBirth", "patient_age", "patient_ageRange", "patient_nationality", "patient_gender", "patientKey", "date", "duration", "patient_mobilePhoneNumber", "status", "type", "dentist_name", "machine_description", "futureAppointmentDate"]
         //additionalParams : {reportName : "APPOINTMENT_DETAILS_REPORT"}
     },
     AppointmentTypeList : {
