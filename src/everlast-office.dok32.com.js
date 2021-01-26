@@ -19,7 +19,7 @@ function everlastOfficeDok32Com(){ // This function scans the page periodically 
 	    //addPagination();
 	}
 	editElementsOnce("[ui-sref='app.series.item.post-operation-instruction']", (elem) => {
-		elem.innerText = "Pre & Post Operation";
+		elem.innerText = "Pre & Post Instruction";
 	}, "rename-post-operation-instructions-to-pre-and-post");
 }
 
