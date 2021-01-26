@@ -2,7 +2,7 @@ import {addFunctionButtons} from "./addFunctionButtons.js";
 //import {addPagination} from "./addPagination.js";
 
 function editElementsOnce(query, editor, procedureName){
-	elements = document.querySelectorAll(query);
+	var elements = document.querySelectorAll(query);
 	elements.forEach((e) => {
 		if(!e.getAttribute(procedureName)){
 			editor(e);
