@@ -24,7 +24,7 @@ async function addNewDocEditor(oldEditorDiv){
             });
             editor.on('keypress', function(e) {
                 var editor = e.target;
-                var newContent = editor.getContent();
+                var newContent =  editor.innerHTML;
                 oldEditorObj.setContent(newContent);
             });
         }
