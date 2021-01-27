@@ -22,6 +22,11 @@ async function addNewDocEditor(oldEditorDiv){
                 var newContent = editor.getContent();
                 oldEditorObj.setContent(newContent);
             });
+            editor.on('keypress', function(e) {
+                var editor = e.target;
+                var newContent = editor.getContent();
+                oldEditorObj.setContent(newContent);
+            });
         }
     }))[0];
     console.log("newEditorObj:", newEditorObj);
