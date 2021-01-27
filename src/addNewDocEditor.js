@@ -9,7 +9,7 @@ async function addNewDocEditor(oldEditorDiv){
     newEditorDiv.setAttribute("id", "new-mce-editor");
     oldEditorDiv.parentNode.append(newEditorDiv);
     console.log("Short codes list: ", shortCodes);
-    newEditorObj = window.tinymce.init({
+    var newEditorObj = window.tinymce.init({
         selector: `#new-mce-editor`,
         setup: function(editor) {
             editor.on('change', function(editor) {
