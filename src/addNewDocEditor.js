@@ -3,6 +3,7 @@ import {fetchList} from "./fetchList.js";
 async function addNewDocEditor(oldEditorDiv){
     var shortCodes = await fetchList('consent-form/template/keyword/choose.json');
     var oldEditorObj = window.tinymce.editors[0].selection.editor;
+    console.log("oldEditorObj:", oldEditorObj);
     var currentContent =  oldEditorObj.getContent();
     oldEditorDiv.style.display = "none";
     var newEditorDiv = document.createElement("div");
@@ -18,6 +19,7 @@ async function addNewDocEditor(oldEditorDiv){
             });
         }
     });
+    console.log("newEditorObj:", newEditorObj);
     if(currentContent.length){
         newEditorObj.setContent(currentContent);
     }

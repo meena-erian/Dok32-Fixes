@@ -90,7 +90,10 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             return false;
         }
         let totalCount = response.data.totalCount;
-        if(!response.data.list) break;
+        if(!response.data.list) {
+            list = response.data;
+            break;
+        }
         if(typeof mergeFunc === "function"){
             var subprogress = 0;
             let results = await Promise.all(response.data.list.map(async p => {
