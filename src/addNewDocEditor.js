@@ -13,8 +13,8 @@ async function addNewDocEditor(oldEditorDiv){
     var newEditorObj = (await window.tinymce.init({
         selector: `#new-mce-editor`,
         setup: function(editor) {
-            editor.on('change', function(editor) {
-                console.log("editor:", editor);
+            editor.on('change', function(e) {
+                var editor = e.target;
                 var newContent = editor.getContent();
                 oldEditorObj.setContent(newContent);
             });
