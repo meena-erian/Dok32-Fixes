@@ -29,12 +29,6 @@ async function addNewDocEditor(oldEditorDiv){
                 var newContent =  editor.innerHTML;
                 oldEditorObj.setContent(newContent);
             });
-            editor.ui.registry.addMenuItem('myCustomMenuItem', {
-                text: 'My Custom Menu Item',
-                onAction: function() {
-                  alert('Menu item clicked');
-                }
-            });
         }
     }))[0];
     window.editorSyncid = window.setInterval(() => {
