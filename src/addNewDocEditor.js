@@ -14,6 +14,11 @@ async function addNewDocEditor(oldEditorDiv) {
         selector: `#new-mce-editor`,
         branding: false,
         height: 600,
+        menu: {
+            file: { title: 'File', items: 'newdocument templatelist' },
+            insert: { title: 'Insert', items: 'image link shortcode media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime' },
+        },
+        menubar: 'file edit insert format tools table',
         onchange_callback: (editor) => {
             var newContent = editor.getContent();
             oldEditorObj.setContent(newContent);
@@ -28,6 +33,43 @@ async function addNewDocEditor(oldEditorDiv) {
                 var editor = e.target;
                 var newContent = editor.innerHTML;
                 oldEditorObj.setContent(newContent);
+            });
+            editor.ui.registry.addMenuItem('templatelist', {
+                text: 'Open Template',
+                getSubmenuItems: function () {
+                    return [
+                        {
+                            type: 'menuitem',
+                            text: 'Consent Form',
+                            onAction: function () {
+                                editor.insertContent('<p>Template Not Ready!</p>');
+                            }
+                        },
+                        {
+                            type: 'menuitem',
+                            text: 'Fill-in Form',
+                            onAction: function () {
+                                editor.insertContent('<p>Template Not Ready!</p>');
+                            }
+                        }
+                    ];
+                }
+            });
+            editor.ui.registry.addMenuItem('shortcode', {
+                text: 'Shortcode',
+                getSubmenuItems: function () {
+                    var ret = [];
+                    shortCodes.forEach((code) => {
+                        ret.push({
+                            type: 'menuitem',
+                            text: code.name,
+                            onAction: function (){
+                                editor.insertContent(`<span style="color: #ea1414;">[[${code.code}]]</span>`);
+                            }
+                        });
+                    });
+                    return ret;
+                }
             });
         }
     }))[0];
