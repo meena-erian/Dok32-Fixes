@@ -18,7 +18,7 @@ async function addNewDocEditor(oldEditorDiv){
                 oldEditorObj.setContent(newContent);
             });
         }
-    })[0];
+    });
     console.log("newEditorObj:", newEditorObj);
     if(currentContent.length){
         newEditorObj.setContent(currentContent);
