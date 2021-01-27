@@ -2,7 +2,7 @@ import { fetchList } from "./fetchList.js";
 
 async function addNewDocEditor(oldEditorDiv) {
     var shortCodes = await fetchList('consent-form/template/keyword/choose.json');
-    var oldEditorObj = window.tinymce.editors[0].selection.editor;
+    var oldEditorObj = window.tinymcev4.editors[0].selection.editor;
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
     oldEditorDiv.style.display = "none";

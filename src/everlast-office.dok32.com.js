@@ -26,6 +26,7 @@ function everlastOfficeDok32Com(){ // This function scans the page periodically 
 		var s = document.createElement("script");
 		s.setAttribute('referrerpolicy', "origin");
 		s.src = 'https://cdn.tiny.cloud/1/8h4nzko5ufwvmspidtxw8cmcao0wcmocv0s9w2y302dqvljs/tinymce/5/tinymce.min.js';
+		window.tinymcev4 = window.tinymce; // Keep a reference for the old mce in order to access old editor
 		head.append(s);
 	},'editor-script-connected');
 	if(window.tinymce.majorVersion === '5') // Don't replace with the new editor untill the library upgrade is complete
