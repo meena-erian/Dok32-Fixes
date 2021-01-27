@@ -35,43 +35,43 @@ async function addNewDocEditor(oldEditorDiv) {
                 var newContent = editor.innerHTML;
                 oldEditorObj.setContent(newContent);
             });
-            // editor.ui.registry.addMenuItem('templatelist', {
-            //     text: 'Open Template',
-            //     getSubmenuItems: function () {
-            //         return [
-            //             {
-            //                 type: 'menuitem',
-            //                 text: 'Consent Form',
-            //                 onAction: function () {
-            //                     editor.insertContent('<p>Template Not Ready!</p>');
-            //                 }
-            //             },
-            //             {
-            //                 type: 'menuitem',
-            //                 text: 'Fill-in Form',
-            //                 onAction: function () {
-            //                     editor.insertContent('<p>Template Not Ready!</p>');
-            //                 }
-            //             }
-            //         ];
-            //     }
-            // });
-            // editor.ui.registry.addMenuItem('shortcode', {
-            //     text: 'Shortcode',
-            //     getSubmenuItems: function () {
-            //         var ret = [];
-            //         shortCodes.forEach((code) => {
-            //             ret.push({
-            //                 type: 'menuitem',
-            //                 text: code.name,
-            //                 onAction: function (){
-            //                     editor.insertContent(`<span style="color: #ea1414;">[[${code.code}]]</span>`);
-            //                 }
-            //             });
-            //         });
-            //         return ret;
-            //     }
-            // });
+            editor.ui.registry.addMenuItem('templatelist', {
+                text: 'Open Template',
+                getSubmenuItems: function () {
+                    return [
+                        {
+                            type: 'menuitem',
+                            text: 'Consent Form',
+                            onAction: function () {
+                                editor.insertContent('<p>Template Not Ready!</p>');
+                            }
+                        },
+                        {
+                            type: 'menuitem',
+                            text: 'Fill-in Form',
+                            onAction: function () {
+                                editor.insertContent('<p>Template Not Ready!</p>');
+                            }
+                        }
+                    ];
+                }
+            });
+            editor.ui.registry.addMenuItem('shortcode', {
+                text: 'Shortcode',
+                getSubmenuItems: function () {
+                    var ret = [];
+                    shortCodes.forEach((code) => {
+                        ret.push({
+                            type: 'menuitem',
+                            text: code.name,
+                            onAction: function (){
+                                editor.insertContent(`<span style="color: #ea1414;">[[${code.code}]]</span>`);
+                            }
+                        });
+                    });
+                    return ret;
+                }
+            });
         }
     }))[0];
     window.editorSyncid = window.setInterval(() => {
