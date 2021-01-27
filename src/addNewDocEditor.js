@@ -12,6 +12,8 @@ async function addNewDocEditor(oldEditorDiv){
     console.log("Short codes list: ", shortCodes);
     var newEditorObj = (await window.tinymce.init({
         selector: `#new-mce-editor`,
+        branding: false,
+        height: 600,
         onchange_callback: (editor) => {
             var newContent = editor.getContent();
             oldEditorObj.setContent(newContent);
@@ -29,6 +31,18 @@ async function addNewDocEditor(oldEditorDiv){
             });
         }
     }))[0];
+    window.editorSyncid = window.setInterval(() => {
+        if(oldEditorObj && newEditorObj && oldEditorObj.getContent && newEditorObj.getContent){
+            var newContent = newEditorObj.getContent();
+            var oldContent = oldEditorObj.getContent();
+            if(newContent !== oldContent){
+                oldEditorObj.setContent(newContent);
+            }
+        }
+        else{
+            window.clearInterval(window.editorSyncid);
+        }
+    }, 1000);
     console.log("newEditorObj:", newEditorObj);
     if(currentContent.length){
         newEditorObj.setContent(currentContent);
