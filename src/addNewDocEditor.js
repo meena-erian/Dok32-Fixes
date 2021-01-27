@@ -12,6 +12,10 @@ async function addNewDocEditor(oldEditorDiv){
     console.log("Short codes list: ", shortCodes);
     var newEditorObj = (await window.tinymce.init({
         selector: `#new-mce-editor`,
+        onchange_callback: (editor) => {
+            var newContent = editor.getContent();
+            oldEditorObj.setContent(newContent);
+        },
         setup: function(editor) {
             editor.on('change', function(e) {
                 var editor = e.target;
