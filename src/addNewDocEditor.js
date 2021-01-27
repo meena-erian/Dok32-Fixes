@@ -14,6 +14,7 @@ async function addNewDocEditor(oldEditorDiv){
         selector: `#new-mce-editor`,
         setup: function(editor) {
             editor.on('change', function(editor) {
+                console.log("editor:", editor);
                 var newContent = editor.getContent();
                 oldEditorObj.setContent(newContent);
             });
