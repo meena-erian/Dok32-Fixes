@@ -28,10 +28,7 @@ function everlastOfficeDok32Com(){ // This function scans the page periodically 
 		s.src = 'https://cdn.tiny.cloud/1/8h4nzko5ufwvmspidtxw8cmcao0wcmocv0s9w2y302dqvljs/tinymce/5/tinymce.min.js';
 		head.append(s);
 	},'editor-script-connected');
-	editElementsOnce('#tinyMCEwrapper', (editorDiv) => {
-		editorDiv.innerHTML = '';
-		addNewDocEditor('tinyMCEwrapper');
-	}, 'editor-replaced-by-new-one');
+	editElementsOnce('#tinyMCEwrapper', addNewDocEditor, 'editor-replaced-by-new-one');
 }
 
 export {everlastOfficeDok32Com};
