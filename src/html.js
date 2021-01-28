@@ -273,7 +273,7 @@ var treatmentInstructions = `
     <p>&nbsp;</p>
     <table style="width: 960px; height: 10px; margin-left: auto; margin-right: auto;" border="1">
         <tbody>
-            <tr>
+            <tr style='vertical-align: text-top;'>
                 <td style="width: 472px;">
                     <p style="text-align: center;"><img
                             src="https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png" width="293"
@@ -311,7 +311,7 @@ var treatmentInstructions = `
     <p>&nbsp;</p>
     <table style="width: 959px; height: 23px; margin-left: auto; margin-right: auto;" border="1">
         <tbody>
-            <tr>
+            <tr style='vertical-align: text-top;'>
                 <td style="width: 471px;"><span style="color: #ea1414;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>&nbsp;<span
                         style="color: #ea1414;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
