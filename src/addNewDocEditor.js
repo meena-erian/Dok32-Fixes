@@ -9,7 +9,7 @@ async function addNewDocEditor(oldEditorDiv) {
     oldEditorDiv.style.display = "none";
     var newEditorDiv = document.createElement("div");
     newEditorDiv.setAttribute("id", "new-mce-editor");
-    oldEditorDiv.parentNode.append(newEditorDiv);
+    oldEditorDiv.parentNode.insertBefore(newEditorDiv, oldEditorDiv);
     console.log("Short codes list: ", shortCodes);
     console.log(" window.tinymce: ", window.tinymce);
     var newEditorObj = (await window.tinymce.init({
@@ -85,6 +85,7 @@ async function addNewDocEditor(oldEditorDiv) {
         }
         else {
             window.clearInterval(window.editorSyncid);
+            console.log("Failed to connect to editors");
         }
     }, 1000);
     console.log("newEditorObj:", newEditorObj);
