@@ -115,7 +115,7 @@ async function addNewDocEditor(oldEditorDiv) {
                             type: 'menuitem',
                             text: code.name,
                             onAction: function (){
-                                editor.insertContent(`<span style="color: #ea1414;">[[${code.code}]]</span>`);
+                                editor.insertContent(`[[${code.code}]]`);
                             }
                         });
                     });
