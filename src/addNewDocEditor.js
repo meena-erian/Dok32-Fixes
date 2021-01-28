@@ -45,6 +45,9 @@ async function addNewDocEditor(oldEditorDiv) {
     if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
         shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
     }
+    if(pageHash.startsWith('#/Series/Info/0/FillInForm')){
+        return;
+    }
     var oldEditorObj = await getEditorObj(oldEditorDiv);
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
