@@ -261,7 +261,7 @@ var treatmentInstructions = `
     <p>&nbsp;</p>
     <table style="width: 962px; height: 5px; margin-left: auto; margin-right: auto;" border="1">
         <tbody>
-            <tr>
+            <tr style='vertical-align: text-top;'>
                 <td style="width: 473px;">
                     <p>&nbsp;</p>
                 </td>
