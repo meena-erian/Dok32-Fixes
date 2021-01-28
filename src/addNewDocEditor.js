@@ -1,4 +1,5 @@
 import { fetchList } from "./fetchList.js";
+import {consectForm} from "./html.js";
 
 async function addNewDocEditor(oldEditorDiv) {
     var shortCodes = await fetchList('consent-form/template/keyword/choose.json');
@@ -43,14 +44,14 @@ async function addNewDocEditor(oldEditorDiv) {
                             type: 'menuitem',
                             text: 'Consent Form',
                             onAction: function () {
-                                editor.insertContent('<p>Template Not Ready!</p>');
+                                editor.setContent(consectForm);
                             }
                         },
                         {
                             type: 'menuitem',
                             text: 'Fill-in Form',
                             onAction: function () {
-                                editor.insertContent('<p>Template Not Ready!</p>');
+                                editor.setContent(consectForm);
                             }
                         }
                     ];
