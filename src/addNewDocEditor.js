@@ -55,10 +55,10 @@ async function addNewDocEditor(oldEditorDiv) {
     console.log("Short codes list: ", shortCodes);
     console.log(" window.tinymce: ", window.tinymce);
     // Remove all editors except the last one
-    window.tinymce.forEach(editor => {
+    window.tinymce.editors.forEach(editor => {
         if(editor !== oldEditorObj) editor.remove();
     });
-    window.tinymcev4.forEach(editor => {
+    window.tinymcev4.editors.forEach(editor => {
         if(editor !== oldEditorObj) editor.remove();
     });
     var newEditorObj = (await window.tinymce.init({
