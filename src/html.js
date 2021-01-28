@@ -157,7 +157,7 @@ var consectForm = `<table style="width: 956px; height: 5px; margin-left: auto; m
             <td dir="rtl" style="width: 476px; height: 10px;"><span style="color: #003366;"> <strong>توقيع بإقرار عام
                         بقبول العلاج</strong></span></td>
         </tr>
-        <tr style="height: 10px;">
+        <tr style="height: 10px; vertical-align: text-top;">
             <td style="width: 474.933px; height: 10px;"><span style="color: #003366;"><strong>Name and Signature of
                         Physician:</strong></span></td>
             <td style="width: 474.933px; height: 10px; text-align: center;">
@@ -196,4 +196,235 @@ var consectForm = `<table style="width: 956px; height: 5px; margin-left: auto; m
     </tbody>
 </table>`;
 
-export {consectForm};
+var treatmentInstructions = `
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <table style="width: 960px; height: 5px; margin-left: auto; margin-right: auto;">
+        <tbody>
+            <tr style="height: 4px;">
+                <td style="width: 205.785px; text-align: center; height: 4px;">
+                    <h4><span dir="rtl" style="color: #ff6600;"><span
+                                style="color: #ea1414;">[[company_logo]]</span>&nbsp;</span></h4>
+                </td>
+                <td style="width: 1294.22px; text-align: center; height: 4px;">
+                    <h2><span style="color: #003366;"><strong>نموذج التعليمات الخاص بالمريض ما قبل و بعد إجراء
+                                ال#######ي</strong></span></h2>
+                    <h3><span style="color: #003366;"><strong>BEFORE AND AFTER PATIENT INSTRUCTIONS FOR #######
+                                PROCEDURES</strong></span></h3>
+                </td>
+            </tr>
+            <tr style="height: 19.3958px;">
+                <td style="width: 205.785px; text-align: center; height: 19.3958px;">&nbsp;</td>
+                <td style="width: 1294.22px; text-align: center; height: 19.3958px;">
+                    <h3><span style="color: #003366;">&nbsp;</span></h3>
+                    <p style="text-align: right;"><span style="color: #003366;">&nbsp;Before and After Patient
+                            Instructions for #######Procedure</span><br /><span
+                            style="color: #003366;">EVERLAST/CLS/MRD/PED/001</span></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="height: 29px; margin-left: auto; margin-right: auto;" border="1" width="963">
+        <tbody>
+            <tr style="height: 10.5667px;">
+                <td style="width: 474.933px; height: 10.5667px;"><span style="color: #003366;"><strong>Patient
+                            Name:&nbsp;</strong>&nbsp;</span></td>
+                <td style="width: 474.933px; height: 10.5667px; text-align: center;"><span
+                        style="color: #003366;">[[patient_first_name]]&nbsp;[[patient_second_name]]</span></td>
+                <td style="width: 476px; height: 10.5667px; text-align: right;"><span style="color: #003366;">&nbsp;
+                        &nbsp;<strong><span class="fontstyle0" dir="rtl">اسم المريض:</span></strong></span></td>
+            </tr>
+            <tr style="height: 10px;">
+                <td style="width: 474.933px; height: 10px;"><span style="color: #003366;"><strong>Medical Record
+                            No.:&nbsp;</strong></span></td>
+                <td style="width: 474.933px; height: 10px; text-align: center;"><span
+                        style="color: #003366;">[[patient_chart_number]]&nbsp;</span></td>
+                <td dir="rtl" style="width: 476px; height: 10px;"><span style="color: #003366;"><strong>&nbsp;رقم
+                            الملف:</strong></span></td>
+            </tr>
+            <tr style="height: 10px;">
+                <td style="width: 474.933px; height: 10px;"><span style="color: #003366;"><strong>Doctor
+                            Name:</strong></span></td>
+                <td style="width: 474.933px; height: 10px; text-align: center;"><span
+                        style="color: #003366;">[[doctor_first_name]]&nbsp;[[doctor_second_name]]&nbsp;</span></td>
+                <td dir="rtl" style="width: 476px; height: 10px;"><span style="color: #003366;"><strong>أسم
+                            الطبيب:</strong></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="width: 962px; height: 5px; margin-left: auto; margin-right: auto;" border="1">
+        <tbody>
+            <tr>
+                <td style="width: 473px;">
+                    <p>&nbsp;</p>
+                </td>
+                <td style="width: 473px;">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <table style="width: 960px; height: 10px; margin-left: auto; margin-right: auto;" border="1">
+        <tbody>
+            <tr>
+                <td style="width: 472px;">
+                    <p style="text-align: center;"><img
+                            src="https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png" width="293"
+                            height="293" /></p>
+                    <p style="text-align: center;">&nbsp;</p>
+                    <table style="height: 22px; margin-left: auto; margin-right: auto;" width="196">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p style="text-align: center;">Same day after the procedures</p>
+                                    <p style="text-align: center;">في نفس يوم الاجراء</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="width: 472px;">
+                    <p style="text-align: center;"><span style="color: #ea1414;">&nbsp; </span><img
+                            src="https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png" width="293"
+                            height="293" />&nbsp;</p>
+                    <p style="text-align: center;">&nbsp;</p>
+                    <table style="height: 48px; margin-left: auto; margin-right: auto;" width="209">
+                        <tbody>
+                            <tr>
+                                <td style="width: 199px; text-align: center;">5 days after the procedures<br />
+                                    <p style="text-align: center;">بعد 5 أيام من الاجراء</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="width: 959px; height: 23px; margin-left: auto; margin-right: auto;" border="1">
+        <tbody>
+            <tr>
+                <td style="width: 471px;"><span style="color: #ea1414;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>&nbsp;<span
+                        style="color: #ea1414;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    </span><img style="display: block; margin-left: auto; margin-right: auto;"
+                        src="https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png" width="293"
+                        height="293" />&nbsp;<br /><br />
+                    <table style="height: 64px; margin-left: auto; margin-right: auto;" width="169">
+                        <tbody>
+                            <tr>
+                                <td style="width: 159px;">
+                                    <p style="text-align: center;">4 hours after the procedure</p>
+                                    <p style="text-align: center;">بعد 4 ساعات</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <p>Though less common, it is possible that some small blisters may develop in the treatment area.
+                        Keeping these areas clean and applying an over- the -counter antibiotic ointment such as
+                        Polysporin ointment can speed the healing process and prevent infection.</p>
+                </td>
+                <td style="width: 472px; text-align: center;"><span style="color: #ea1414;"><img
+                            src="https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png" width="293"
+                            height="293" /></span><br />&nbsp;
+                    <table style="height: 63px; margin-left: auto; margin-right: auto;" width="188">
+                        <tbody>
+                            <tr>
+                                <td style="width: 178px;">
+                                    <p style="text-align: center;">after 1 day of the procedures</p>
+                                    <p style="text-align: center;">بعد يوم واحد من الاجراء</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <p style="text-align: right;">من الآثار الجانبية البسيطة التي قد تدوم&nbsp; لفترة أطول ظهور كتل تشعر
+                        بها تحت الجلد وتغير لون البشرة إلى اللون الداكن وتغير الشعور بالجلد في المنطقة التي خضعت
+                        للعلاج&nbsp; وحولها. يجب أن يختفي كل ذلك تدريجياً بمرور الوقت. يستمر التساقط الجزئي للشعر على
+                        المدى الطويل</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="width: 957px; height: 5px; margin-left: auto; margin-right: auto;" border="1">
+        <tbody>
+            <tr>
+                <td style="width: 470px;">&nbsp;</td>
+                <td style="width: 471px; text-align: right;">
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="height: 29px; margin-left: auto; margin-right: auto;" border="1" width="963">
+        <tbody>
+            <tr style="height: 10.5667px;">
+                <td style="width: 474.933px; height: 10.5667px;"><span style="color: #003366;"><strong>Signature of
+                            Patient:&nbsp;</strong>&nbsp;</span></td>
+                <td style="width: 474.933px; height: 10.5667px; text-align: center;"><span
+                        style="color: #003366;"><br /><br />[[patient_signature_field]]&nbsp;<br /><br /><br /></span>
+                </td>
+                <td dir="rtl" style="width: 476px; height: 10.5667px;"><span style="color: #003366;"><strong>توقيع
+                            المريض:</strong></span></td>
+            </tr>
+            <tr style="height: 10px;">
+                <td style="width: 474.933px; height: 10px;"><span style="color: #003366;">&nbsp;<strong>Signature of
+                            Parent/Legal Guardian:</strong></span></td>
+                <td style="width: 474.933px; height: 10px; text-align: center;"><span style="color: #003366;"><span
+                            style="color: #ea1414;">[[guardian_signature_field]]</span>&nbsp;&nbsp;</span></td>
+                <td dir="rtl" style="width: 476px; height: 10px;"><span
+                        style="color: #003366;">&nbsp;<strong>توقيع&nbsp;ولي الامر/ الوصي القانوني للمرضى
+                            القصر:</strong></span></td>
+            </tr>
+            <tr style="height: 10px;">
+                <td style="width: 474.933px; height: 10px;"><span style="color: #003366;"><strong>Name and Signature of
+                            Physician:</strong></span></td>
+                <td style="width: 474.933px; height: 10px; text-align: center;">
+                    <p><br /><span style="color: #003366;">[[doctor_signature_field]]&nbsp;</span><br /><br /></p>
+                    <p><span style="color: #003366;">[[doctor_first_name]] [[doctor_second_name]]<br /></span></p>
+                </td>
+                <td dir="rtl" style="width: 476px; height: 10px;"><span style="color: #003366;"><strong>توقيع الطبيب
+                            الاسم والمسمى الوظيفي:</strong></span></td>
+            </tr>
+            <tr style="height: 10px;">
+                <td style="width: 474.933px; height: 10px;"><span style="color: #003366;"><strong>Date:</strong></span>
+                </td>
+                <td style="width: 474.933px; height: 10px; text-align: center;">
+                    <p><span style="color: #003366;">[[current_date]]</span></p>
+                </td>
+                <td dir="rtl" style="width: 476px; height: 10px;"><span
+                        style="color: #003366;"><strong>تاريخ:</strong></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <table style="height: 6px; margin-left: auto; margin-right: auto;" border="1" width="964">
+        <tbody>
+            <tr>
+                <td style="width: 314px;"><span style="color: #003366;"><strong>Issue Date:
+                            12/2020</strong></span><br /><span style="color: #003366;"><strong>Revision
+                            Date:&nbsp;</strong></span></td>
+                <td style="width: 314px; text-align: center;"><strong><span style="color: #003366;">Version
+                            1</span><br /><span style="color: #ff0000;">CONTROLLED DOCUMENT</span></strong></td>
+                <td style="width: 314px;">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><br /><span style="color: #ea1414;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span> <br />&nbsp; <br />&nbsp; &nbsp;</p>
+</body>
+</html>
+`;
+
+export {consectForm, treatmentInstructions};

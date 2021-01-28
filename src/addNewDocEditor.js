@@ -1,5 +1,5 @@
 import { fetchList } from "./fetchList.js";
-import {consectForm} from "./html.js";
+import { consectForm, treatmentInstructions } from "./html.js";
 
 /**
  * Waits for the old editor to be initialized and then returns its object
@@ -107,9 +107,9 @@ async function addNewDocEditor(oldEditorDiv) {
                         },
                         {
                             type: 'menuitem',
-                            text: 'Fill-in Form',
+                            text: 'Treatment Instructions',
                             onAction: function () {
-                                editor.setContent(consectForm);
+                                editor.setContent(treatmentInstructions);
                             }
                         }
                     ];
@@ -135,6 +135,7 @@ async function addNewDocEditor(oldEditorDiv) {
     }));
     console.log("newEditorObj[]: ", newEditorObj);
     newEditorObj = newEditorObj[0];
+    if(newEditorObj == undefined) console.log("newEditorObj:Undefined");
     window.editorSyncid = window.setInterval(() => {
         if (oldEditorObj && newEditorObj && oldEditorObj.getContent && newEditorObj.getContent) {
             var newContent = newEditorObj.getContent();
