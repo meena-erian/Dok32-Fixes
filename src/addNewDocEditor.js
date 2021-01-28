@@ -1,6 +1,15 @@
 import { fetchList } from "./fetchList.js";
 import {consectForm} from "./html.js";
 
+function getEditorObj(div){
+    var tinyDiv = div.querySelector('.tox-tinymce');
+    if(!tinyDiv){
+        tinyDiv = div.querySelector('.mce-container');
+        return window.tinymcev4.editors.find(e => e.editorContainer == tinyDiv);
+    }
+    return window.tinymce.editors.find(e => e.editorContainer == tinyDiv);
+}
+
 async function addNewDocEditor(oldEditorDiv) {
     var pageHash = window.location.hash.split("?")[0];
     var shortCodes = [];
@@ -10,7 +19,7 @@ async function addNewDocEditor(oldEditorDiv) {
     if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
         shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
     }
-    var oldEditorObj = window.tinymcev4.editors[0].selection.editor;
+    var oldEditorObj = getEditorObj(oldEditorDiv);
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
     oldEditorDiv.style.display = "none";
