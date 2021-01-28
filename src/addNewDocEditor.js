@@ -66,7 +66,7 @@ async function addNewDocEditor(oldEditorDiv) {
         if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
     });
     window.tinymcev4.editors.forEach(editor => {
-        if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
+        //if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
     });
     console.log('All old editors was cleared from memory');
     var newEditorObj = (await window.tinymce.init({
