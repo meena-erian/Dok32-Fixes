@@ -78,7 +78,9 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
         }
     }
     var list = [];
-    while(reccursion){
+    var firstRequest = true;
+    while(reccursion || firstRequest){
+        firstRequest = false;
         let resource = `/webApi/${endpoint}?${queryString}&start=${start}&limit=${limit}`;
         console.log(`Fetching:${resource}`);
         let response = await (await fetch(resource)).json();
@@ -88,7 +90,10 @@ async function fetchList(endpoint, params, reccursion = false, limit = 100, prog
             return false;
         }
         let totalCount = response.data.totalCount;
-        if(!response.data.list) break;
+        if(!response.data.list) {
+            list = response.data;
+            break;
+        }
         if(typeof mergeFunc === "function"){
             var subprogress = 0;
             let results = await Promise.all(response.data.list.map(async p => {
