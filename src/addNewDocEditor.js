@@ -2,7 +2,14 @@ import { fetchList } from "./fetchList.js";
 import {consectForm} from "./html.js";
 
 async function addNewDocEditor(oldEditorDiv) {
-    var shortCodes = await fetchList('consent-form/template/keyword/choose.json');
+    var pageHash = window.location.hash.split("?")[0];
+    var shortCodes = [];
+    if(pageHash.startsWith('#/Series/Info/0/ConsentForm')){
+        shortCodes = await fetchList('consent-form/template/keyword/choose.json');
+    }
+    if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
+        shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
+    }
     var oldEditorObj = window.tinymcev4.editors[0].selection.editor;
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
@@ -74,7 +81,9 @@ async function addNewDocEditor(oldEditorDiv) {
                 }
             });
         }
-    }))[0];
+    }));
+    console.log("newEditorObj[]: ", newEditorObj);
+    newEditorObj = newEditorObj[0];
     window.editorSyncid = window.setInterval(() => {
         if (oldEditorObj && newEditorObj && oldEditorObj.getContent && newEditorObj.getContent) {
             var newContent = newEditorObj.getContent();
