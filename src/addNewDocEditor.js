@@ -42,12 +42,16 @@ async function addNewDocEditor(oldEditorDiv) {
     if(pageHash.startsWith('#/Series/Info/0/ConsentForm')){
         shortCodes = await fetchList('consent-form/template/keyword/choose.json');
     }
-    if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
+    else if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
         shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
     }
-    if(pageHash.startsWith('#/Series/Info/0/FillInForm')){
+    else if(pageHash.startsWith('#/Series/Info/0/FillInForm')){
         return;
     }
+    else if(pageHash.startsWith('#/Series/Info/0/Vital')){
+        return;
+    }
+    else return ;
     var oldEditorObj = await getEditorObj(oldEditorDiv);
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
@@ -72,6 +76,7 @@ async function addNewDocEditor(oldEditorDiv) {
             file: { title: 'File', items: 'newdocument templatelist' },
             insert: { title: 'Insert', items: 'image link shortcode media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime' },
         },
+        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
         menubar: 'file edit insert format tools table',
         onchange_callback: (editor) => {
             var newContent = editor.getContent();
