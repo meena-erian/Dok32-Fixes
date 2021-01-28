@@ -42,12 +42,16 @@ async function addNewDocEditor(oldEditorDiv) {
     if(pageHash.startsWith('#/Series/Info/0/ConsentForm')){
         shortCodes = await fetchList('consent-form/template/keyword/choose.json');
     }
-    if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
+    else if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
         shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
     }
-    if(pageHash.startsWith('#/Series/Info/0/FillInForm')){
+    else if(pageHash.startsWith('#/Series/Info/0/FillInForm')){
         return;
     }
+    else if(pageHash.startsWith('#/Series/Info/0/Vital')){
+        return;
+    }
+    else return ;
     var oldEditorObj = await getEditorObj(oldEditorDiv);
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
