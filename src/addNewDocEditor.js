@@ -1,13 +1,39 @@
 import { fetchList } from "./fetchList.js";
 import {consectForm} from "./html.js";
 
-function getEditorObj(div){
-    var tinyDiv = div.querySelector('.tox-tinymce');
-    if(!tinyDiv){
-        tinyDiv = div.querySelector('.mce-container');
-        return window.tinymcev4.editors.find(e => e.editorContainer == tinyDiv);
-    }
-    return window.tinymce.editors.find(e => e.editorContainer == tinyDiv);
+/**
+ * Waits for the old editor to be initialized and then returns its object
+ * @param {HTMLDivElement} div 
+ */
+async function getEditorObj(div){
+    return new Promise(
+        (resolve, reject) => {
+            var numberOfAttemts = 0;
+            var interval = window.setInterval(
+                () => {
+                    var tinyDiv = div.querySelector('.tox-tinymce');
+                    if(!tinyDiv){
+                        tinyDiv = div.querySelector('.mce-container');
+                        if(tinyDiv){
+                            window.clearInterval(interval);
+                            resolve(window.tinymcev4.editors.find(e => e.editorContainer == tinyDiv));
+                        }
+                    }
+                    else {
+                        window.clearInterval(interval);
+                        resolve(window.tinymce.editors.find(e => e.editorContainer == tinyDiv));
+                    }
+                    numberOfAttemts += 1;
+                    if(numberOfAttemts > 25){
+                        console.log("Unable to find oldEditorObj");
+                        window.clearInterval(interval);
+                        reject("Unable to find oldEditorObj");
+                    }
+                },
+                200
+            );
+        }
+    );
 }
 
 async function addNewDocEditor(oldEditorDiv) {
@@ -19,7 +45,7 @@ async function addNewDocEditor(oldEditorDiv) {
     if(pageHash.startsWith('#/Series/Info/0/PostOperationInstruction')){
         shortCodes = await fetchList('post-operation-instruction/template/keyword/choose.json');
     }
-    var oldEditorObj = getEditorObj(oldEditorDiv);
+    var oldEditorObj = await getEditorObj(oldEditorDiv);
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
     oldEditorDiv.style.display = "none";
