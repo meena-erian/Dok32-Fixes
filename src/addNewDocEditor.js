@@ -69,6 +69,7 @@ async function addNewDocEditor(oldEditorDiv) {
     window.tinymcev4.editors.forEach(editor => {
         //if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
     });
+    newEditoriFrame.style = "width: -webkit-fill-available;";
     window.addEventListener('message', event => {
         if (event.origin.startsWith('https://everlast.portacode.com')) { 
             console.log(event.data);
@@ -76,7 +77,7 @@ async function addNewDocEditor(oldEditorDiv) {
                 oldEditorObj.setContent(event.data.tinyMCENewContent);
             }
             else if(event.data.pleaseResizeMe){
-                newEditoriFrame.width = event.data.pleaseResizeMe.width;
+                //newEditoriFrame.width = event.data.pleaseResizeMe.width;
                 newEditoriFrame.height = event.data.pleaseResizeMe.height;
             }
         } else {
