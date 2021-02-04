@@ -29,8 +29,8 @@ function everlastOfficeDok32Com(){ // This function scans the page periodically 
 		window.tinymcev4 = window.tinymce; // Keep a reference for the old mce in order to access old editor
 		//head.append(s);
 	},'editor-script-connected');
-	if(window.tinymce.majorVersion === '5') // Don't replace with the new editor untill the library upgrade is complete
-		editElementsOnce('#tinyMCEwrapper', addNewDocEditor, 'editor-replaced-by-new-one');
+	//if(window.tinymce.majorVersion === '5') // Don't replace with the new editor untill the library upgrade is complete
+	editElementsOnce('#tinyMCEwrapper', addNewDocEditor, 'editor-replaced-by-new-one');
 }
 
 export {everlastOfficeDok32Com};
