@@ -56,10 +56,11 @@ async function addNewDocEditor(oldEditorDiv) {
     console.log("oldEditorObj:", oldEditorObj);
     var currentContent = oldEditorObj.getContent();
     oldEditorDiv.style.display = "none";
-    var newEditorDiv = document.createElement("div");
-    newEditorDiv.setAttribute("id", "new-mce-editor");
-    oldEditorDiv.parentNode.insertBefore(newEditorDiv, oldEditorDiv);
-    console.log("Short codes list: ", shortCodes);
+    
+    var newEditoriFrame = document.createElement("iframe");
+    newEditoriFrame.setAttribute("id", "new-mce-editor");
+    oldEditorDiv.parentNode.insertBefore(newEditoriFrame, oldEditorDiv);
+    //console.log("Short codes list: ", shortCodes);
     console.log(" window.tinymce: ", window.tinymce);
     // Remove all editors except the last one
     window.tinymce.editors.forEach(editor => {
@@ -68,90 +69,20 @@ async function addNewDocEditor(oldEditorDiv) {
     window.tinymcev4.editors.forEach(editor => {
         //if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
     });
-    console.log('All old editors was cleared from memory');
-    var newEditorObj = (await window.tinymce.init({
-        selector: `#new-mce-editor`,
-        branding: false,
-        height: 600,
-        menu: {
-            file: { title: 'File', items: 'newdocument templatelist' },
-            insert: { title: 'Insert', items: 'image link shortcode media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime' },
-        },
-        plugins: 'code',
-        toolbar: 'code undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
-        menubar: 'file edit insert format tools table',
-        onchange_callback: (editor) => {
-            var newContent = editor.getContent();
-            oldEditorObj.setContent(newContent);
-        },
-        setup: function (editor) {
-            editor.on('change', function (e) {
-                var editor = e.target;
-                var newContent = editor.getContent();
-                oldEditorObj.setContent(newContent);
-            });
-            editor.on('keypress', function (e) {
-                var editor = e.target;
-                var newContent = editor.innerHTML;
-                oldEditorObj.setContent(newContent);
-            });
-            editor.ui.registry.addMenuItem('templatelist', {
-                text: 'Open Template',
-                getSubmenuItems: function () {
-                    return [
-                        {
-                            type: 'menuitem',
-                            text: 'Consent Form',
-                            onAction: function () {
-                                editor.setContent(consectForm);
-                            }
-                        },
-                        {
-                            type: 'menuitem',
-                            text: 'Treatment Instructions',
-                            onAction: function () {
-                                editor.setContent(treatmentInstructions);
-                            }
-                        }
-                    ];
-                }
-            });
-            editor.ui.registry.addMenuItem('shortcode', {
-                text: 'Shortcode',
-                getSubmenuItems: function () {
-                    var ret = [];
-                    shortCodes.forEach((code) => {
-                        ret.push({
-                            type: 'menuitem',
-                            text: code.name,
-                            onAction: function (){
-                                editor.insertContent(`[[${code.code}]]`);
-                            }
-                        });
-                    });
-                    return ret;
-                }
-            });
-        }
-    }));
-    console.log("newEditorObj[]: ", newEditorObj);
-    newEditorObj = newEditorObj[0];
-    if(newEditorObj == undefined) console.log("newEditorObj:Undefined");
-    window.editorSyncid = window.setInterval(() => {
-        if (oldEditorObj && newEditorObj && oldEditorObj.getContent && newEditorObj.getContent) {
-            var newContent = newEditorObj.getContent();
-            var oldContent = oldEditorObj.getContent();
-            if (newContent !== oldContent) {
-                oldEditorObj.setContent(newContent);
+    window.addEventListener('message', event => {
+        if (event.origin.startsWith('https://everlast.portacode.com')) { 
+            console.log(event.data);
+            if(event.data.tinyMCENewContent){
+                oldEditorObj.setContent(event.data.tinyMCENewContent);
             }
-        }
-        else {
-            window.clearInterval(window.editorSyncid);
-            console.log("Failed to connect to editors");
-        }
-    }, 1000);
-    console.log("newEditorObj:", newEditorObj);
+        } else {
+            return; 
+        } 
+    }); 
+    console.log('All old editors was cleared from memory');
+    newEditoriFrame.src = 'https://everlast.portacode.com/consent-forms';
     if (currentContent.length) {
+        newEditoriFrame.contentWindow.postMessage({"tinyMCEInitialContent": currentContent}, "*");
         newEditorObj.setContent(currentContent);
     }
 }
