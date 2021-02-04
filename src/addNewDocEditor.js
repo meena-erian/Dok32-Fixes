@@ -75,18 +75,14 @@ async function addNewDocEditor(oldEditorDiv) {
             if(event.data.tinyMCENewContent){
                 oldEditorObj.setContent(event.data.tinyMCENewContent);
             }
+            else if(event.data.pleaseResizeMe){
+                newEditoriFrame.width = event.data.pleaseResizeMe.width;
+                newEditoriFrame.height = event.data.pleaseResizeMe.height;
+            }
         } else {
             return; 
         } 
     }); 
-    function resizeIFrameToFitContent( iFrame ) {
-        iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
-        iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
-    }
-    
-    setInterval(() => {
-        resizeIFrameToFitContent(newEditoriFrame);
-    }, 500);
     console.log('All old editors was cleared from memory');
     newEditoriFrame.src = 'https://everlast.portacode.com/consent-forms';
     if (currentContent.length) {
