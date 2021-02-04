@@ -69,7 +69,7 @@ async function addNewDocEditor(oldEditorDiv) {
     window.tinymcev4.editors.forEach(editor => {
         //if(editor && editor.remove && editor !== oldEditorObj) editor.remove();
     });
-    newEditoriFrame.style = "width: -webkit-fill-available;";
+    newEditoriFrame.style = "width: -webkit-fill-available; border: 0;";
     window.addEventListener('message', event => {
         if (event.origin.startsWith('https://everlast.portacode.com')) { 
             console.log(event.data);
@@ -80,16 +80,15 @@ async function addNewDocEditor(oldEditorDiv) {
                 //newEditoriFrame.width = event.data.pleaseResizeMe.width;
                 newEditoriFrame.height = event.data.pleaseResizeMe.height;
             }
+            else if(event.data.doneloading){
+                newEditoriFrame.contentWindow.postMessage({"tinyMCEInitialContent": currentContent}, "*");
+            }
         } else {
             return; 
         } 
     }); 
     console.log('All old editors was cleared from memory');
     newEditoriFrame.src = 'https://everlast.portacode.com/consent-forms';
-    if (currentContent.length) {
-        newEditoriFrame.contentWindow.postMessage({"tinyMCEInitialContent": currentContent}, "*");
-        newEditorObj.setContent(currentContent);
-    }
 }
 
 export { addNewDocEditor };
