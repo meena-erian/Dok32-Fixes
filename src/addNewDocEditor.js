@@ -79,6 +79,14 @@ async function addNewDocEditor(oldEditorDiv) {
             return; 
         } 
     }); 
+    function resizeIFrameToFitContent( iFrame ) {
+        iFrame.width  = iFrame.contentWindow.document.body.scrollWidth;
+        iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+    }
+    
+    setInterval(() => {
+        resizeIFrameToFitContent(newEditoriFrame);
+    }, 500);
     console.log('All old editors was cleared from memory');
     newEditoriFrame.src = 'https://everlast.portacode.com/consent-forms';
     if (currentContent.length) {
