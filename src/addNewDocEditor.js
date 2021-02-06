@@ -59,7 +59,6 @@ async function addNewDocEditor(oldEditorDiv) {
     
     var newEditoriFrame = document.createElement("iframe");
     newEditoriFrame.setAttribute("id", "new-mce-editor");
-    oldEditorDiv.parentNode.insertBefore(newEditoriFrame, oldEditorDiv);
     //console.log("Short codes list: ", shortCodes);
     console.log(" window.tinymce: ", window.tinymce);
     // Remove all editors except the last one
@@ -99,6 +98,7 @@ async function addNewDocEditor(oldEditorDiv) {
             return; 
         } 
     }); 
+    oldEditorDiv.parentNode.insertBefore(newEditoriFrame, oldEditorDiv);
     console.log('All old editors was cleared from memory');
     newEditoriFrame.src = 'https://everlast.portacode.com/consent-forms';
 }
