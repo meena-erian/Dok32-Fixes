@@ -80,6 +80,7 @@ async function addNewDocEditor(oldEditorDiv) {
                 newEditoriFrame.height = event.data.pleaseResizeMe.height;
             }
             else if(event.data.sendconfig){
+                console.log("Parent senging config after signal");
                 newEditoriFrame.contentWindow.postMessage({
                     "initialconfig" : "true",
                     "shortCodes" : shortCodes,
