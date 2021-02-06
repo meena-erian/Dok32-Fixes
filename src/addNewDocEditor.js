@@ -88,7 +88,7 @@ async function addNewDocEditor(oldEditorDiv) {
                         {"name" : "sent Form", "content": consectForm},
                         {"name" : "Treatment Instructions", "content": treatmentInstructions}
                     ]
-                });
+                }, "*");
             }
             else if(event.data.doneloading){
                 newEditoriFrame.contentWindow.postMessage({
