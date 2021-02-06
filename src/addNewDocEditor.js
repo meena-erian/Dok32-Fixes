@@ -81,7 +81,14 @@ async function addNewDocEditor(oldEditorDiv) {
                 newEditoriFrame.height = event.data.pleaseResizeMe.height;
             }
             else if(event.data.doneloading){
-                newEditoriFrame.contentWindow.postMessage({"tinyMCEInitialContent": currentContent}, "*");
+                newEditoriFrame.contentWindow.postMessage({
+                    "tinyMCEInitialContent": currentContent, 
+                    "shortCodes" : shortCodes,
+                    "templates" : [
+                        {"name" : "sent Form", "content": consectForm},
+                        {"name" : "Treatment Instructions", "content": treatmentInstructions}
+                    ]
+                }, "*");
             }
         } else {
             return; 
