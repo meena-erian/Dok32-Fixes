@@ -85,7 +85,7 @@ async function addNewDocEditor(oldEditorDiv) {
                     "initialconfig" : "true",
                     "shortCodes" : shortCodes,
                     "templates" : [
-                        {"name" : "sent Form", "content": consectForm},
+                        {"name" : "Consent Form", "content": consectForm},
                         {"name" : "Treatment Instructions", "content": treatmentInstructions}
                     ]
                 }, "*");
