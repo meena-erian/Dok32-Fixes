@@ -5,7 +5,7 @@ import {viewReportButton} from "./viewReportButton.js";
 
 function addFunctionButtons(){
 	let greenButtons = document.querySelectorAll("button.btn-success");
-    let defaultBttons = document.querySelectorAll("btn-default");
+    let defaultBttons = document.querySelectorAll("button.btn-default");
 	greenButtons.forEach((btn) => {
 		if (btn.innerText.includes("XLS")) {
             let form = btn.parentElement;
