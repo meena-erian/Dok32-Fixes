@@ -22,7 +22,7 @@ function addFunctionButtons(){
         }
     });
     defaultBttons.forEach((btn) => {
-        if (btn.innerText == 'Go!' && btn.getAttribute('ng-click') == 'searchItems()'){
+        if (btn.innerText == 'Search' && btn.getAttribute('ng-click') == 'searchItems()'){
             let form = btn.parentElement;
             form.setAttribute("Meena-extension-loaded", true);
             btn.parentElement.append("  ");
