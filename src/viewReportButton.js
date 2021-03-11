@@ -220,7 +220,7 @@ const reportsParams = {
     "#/Patient/List" : {
         api: "patient/list.json",
         limit: 10,
-        paramsProps: ["searchParams"]
+        paramsProps: ["searchParams", "params"]
     }
 }
 

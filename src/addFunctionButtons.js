@@ -21,7 +21,7 @@ function addFunctionButtons(){
         }
     });
     defaultBttons.forEach((btn) => {
-        if (btn.innerText = 'Go!'){
+        if (btn.innerText = 'Go!' && btn.getAttribute('ng-click') == 'searchItems()'){
             let form = btn.parentElement;
             form.setAttribute("Meena-extension-loaded", true);
             btn.parentElement.append("  ");
