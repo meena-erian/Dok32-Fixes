@@ -216,6 +216,10 @@ const reportsParams = {
         limit: 100,
         paramsProps: ["searchParams"],
         filter: restructureTallyReport
+    },
+    "#/Patient/List" : {
+        api: "patient/list.json",
+        imit=10
     }
 }
 
