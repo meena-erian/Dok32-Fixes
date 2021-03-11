@@ -3,6 +3,7 @@ import {sendSMSButton} from "./sendSMSButton.js";
 import {viewReportButton} from "./viewReportButton.js";
 //import {bindForm} from "./bindForm.js";
 
+
 function addFunctionButtons(){
 	let greenButtons = document.querySelectorAll("button.btn-success");
     let defaultBttons = document.querySelectorAll("button.btn-default");
@@ -21,7 +22,7 @@ function addFunctionButtons(){
         }
     });
     defaultBttons.forEach((btn) => {
-        if (btn.innerText = 'Go!' && btn.getAttribute('ng-click') == 'searchItems()'){
+        if (btn.innerText == 'Go!' && btn.getAttribute('ng-click') == 'searchItems()'){
             let form = btn.parentElement;
             form.setAttribute("Meena-extension-loaded", true);
             btn.parentElement.append("  ");
