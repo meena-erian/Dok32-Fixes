@@ -219,7 +219,8 @@ const reportsParams = {
     },
     "#/Patient/List" : {
         api: "patient/list.json",
-        imit=10
+        limit: 10,
+        paramsProps: ["searchParams"]
     }
 }
 
